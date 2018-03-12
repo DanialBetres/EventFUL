@@ -1,0 +1,14 @@
+.root {
+    display: "flex";
+    flexWrap: "wrap";
+    justifyContent: "space-around";
+    height: 300px;
+    overflow: scroll;
+    width: 50%;
+    margin: 0 auto;
+},
+.gridList {
+  width: 50%;
+  height: 450;
+  overflowY: 'auto';
+}
