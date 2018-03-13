@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom'
 import classes from './View.css';
 import {GridList, GridTile} from 'material-ui/GridList';
-import IconButton from 'material-ui/IconButton';
-import Subheader from 'material-ui/Subheader';
-import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+// import IconButton from 'material-ui/IconButton';
+// import Subheader from 'material-ui/Subheader';
+// import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import axios from 'axios';
 import SearchBar from 'material-ui-search-bar';
-import SearchInput, {createFilter} from 'react-search-input'
+import {createFilter} from 'react-search-input'
+// import SearchInput, {createFilter} from 'react-search-input'
 
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
 
@@ -81,7 +81,7 @@ class View extends Component {
               key={res.ID  + i}
               title={res.TITLE}
               subtitle={<span>Category: <b>{res.CATEGORY}</b></span>}>
-              <img src={res.VIDEO} />
+              <img alt='img' src={res.VIDEO} />
             </GridTile>
           )
     });

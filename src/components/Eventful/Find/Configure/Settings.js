@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import classes from './Settings.css';
-import Aux from '../../../../hoc/AuxA';
+// import Aux from '../../../../hoc/AuxA';
 import DatePicker from 'material-ui/DatePicker';
 import Button from '../../../UI/Buttons/Button';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import ActionFavorite from 'material-ui/svg-icons/action/favorite';
-import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
+// import ActionFavorite from 'material-ui/svg-icons/action/favorite';
+// import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 class Settings extends Component{
   state = {
