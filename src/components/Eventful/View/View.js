@@ -8,6 +8,8 @@ import axios from 'axios';
 import SearchBar from 'material-ui-search-bar';
 import {createFilter} from 'react-search-input'
 // import SearchInput, {createFilter} from 'react-search-input'
+import database from '../../../assets/database';
+
 
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
 
@@ -24,6 +26,17 @@ class View extends Component {
     super(props)
     this.searchUpdated = this.searchUpdated.bind(this);
     // this.handleClick = this.handleClick.bind(this);
+    // database.ref(0).once('value', res =>{
+    //   console.dir(res)
+    //   console.log('hello')
+    //   console.log(res.val());
+    // })
+    database.ref('/'+ 1).once('value').then(res =>{
+      console.dir(res)
+      console.log('hello')
+      console.log(res.val());
+    }) 
+      
   }
   // handleClick(event) {
   //       this.setState({
@@ -33,6 +46,9 @@ class View extends Component {
 
   componentDidMount () {
       // console.log( this.props );
+      
+
+
       axios.get( '/events.json' )
           .then( response => {
             let rawEvents = response.data;
