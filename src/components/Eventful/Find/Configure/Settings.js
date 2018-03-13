@@ -23,17 +23,17 @@ class Settings extends Component{
           <RadioButton
             value={1}
             label="< 1 km"
-            style={classes.radioButton}
+            className={classes.radioButton}
           />
           <RadioButton
             value={2}
             label="< 5 km"
-            style={classes.radioButton}
+            className={classes.radioButton}
           />
           <RadioButton
             value={3}
             label="5km +"
-            style={classes.radioButton}
+            className={classes.radioButton}
           />
         </RadioButtonGroup>
         <DropDownMenu value={this.state.dropDownValue} onChange={this.handleChange}>
