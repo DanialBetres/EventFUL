@@ -22,7 +22,7 @@ class View extends Component {
     todosPerPage: 6,
     distance: 0,
     activity: "",
-    date: ""
+    date: 0
 
   };
   constructor (props){
@@ -42,6 +42,7 @@ class View extends Component {
 
   componentWillMount() {
     let data = this.props.location.pathname.split("/");
+    // console.log(Date.parse(data[4]))
     this.setState({
       distance: data[2],
       activity: data[3],
@@ -58,17 +59,18 @@ class View extends Component {
       // axios.get( '/events.json' )
         database.ref('/').once('value')
           .then( response => {
+            // let rawEvents = response.data;
             let rawEvents = response.val();
-            // console.dir(rawEvents[0]);
+
             let filteredEvents = [];
-            // console.log(this.state.activity)
             for( let eventA of rawEvents){
-              if(eventA.CATEGORY == this.state.activity){
+              console.log(Date.parse(eventA.START_DATE))
+              let date = Date.parse(eventA.START_DATE);
+              if(eventA.CATEGORY == this.state.activity && (date >= this.state.date)){
                 filteredEvents.push(eventA);
               }
             }
             this.setState({events: filteredEvents});
-            // console.log( response.data[0] );
           } )
           .catch( error => {
               console.log( error );

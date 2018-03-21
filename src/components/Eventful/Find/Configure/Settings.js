@@ -23,10 +23,14 @@ class Settings extends Component{
     console.dir(event.getDate());
     console.dir(event.getMonth()+1);
     console.dir(event.getFullYear());
-    this.setState({date:
-      event.getDate() +"-" +
-      (event.getMonth()+1) + "-" +
-      event.getFullYear()})
+    console.log(Date.parse(event))
+    this.setState({
+      date: Date.parse(event)
+    })
+    // this.setState({date:
+    //   event.getDate() +"-" +
+    //   (event.getMonth()+1) + "-" +
+    //   event.getFullYear()})
     // console.log(x);
   }
   distanceHandler = (event) =>{
