@@ -86,6 +86,7 @@ class Settings extends Component{
           <MenuItem  value={"City Events"} primaryText="City Events" />
           <MenuItem  value={"Business Events"} primaryText="Business Events" />
           <MenuItem  value={"Environmental Events"} primaryText="Environmental Events" />
+          <MenuItem  value={"Exhibit"} primaryText="Exhibit" />
         </DropDownMenu>
 
         <DatePicker

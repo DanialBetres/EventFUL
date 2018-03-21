@@ -10,7 +10,8 @@ import {createFilter} from 'react-search-input'
 // import SearchInput, {createFilter} from 'react-search-input'
 import database from '../../../assets/database';
 import Aux from '../../../hoc/AuxA';
-
+// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import GoogleMap from 'google-distance-matrix';
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
 
 
@@ -21,28 +22,59 @@ class View extends Component {
     currentPage: 1,
     todosPerPage: 6,
     distance: 0,
-    activity: "",
-    date: 0
+    activity: '',
+    date: 0,
+    all: false,
+    address:'',
+    dest: '',
+    distanceText:''
+
 
   };
   constructor (props){
     super(props)
     this.searchUpdated = this.searchUpdated.bind(this);
-
-    let data = this.props.location.pathname.split("/");
-    this.setState({
-      distance: data[2],
-      activity: data[3],
-      date: data[4]
-    })
-
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
     // this.handleClick = this.handleClick.bind(this);
 
   }
+  handleFormSubmit = (event) => {
+    const component = this
+    const { address, dest } = this.state
+
+    event.preventDefault()
+    console.log('hello')
+    GoogleMap.matrix(address, dest, function (err, distances) {
+        distance.key('AIzaSyCFKLGuYz6ffYby7U-ODjFtV5TO4nDyevE');
+        if (err) {
+            return console.log(err);
+        }
+        if(!distances) {
+            return console.log('no distances');
+        }
+
+        if (distances.status == 'OK') {
+            if(distances.rows[0].elements[0])  {
+                var distance = distances.rows[0].elements[0].duration['text'];
+
+                component.setState({
+                    foundDistance: true,
+                    distanceText: distance
+                });
+            }
+        }
+    });
+}
 
   componentWillMount() {
     let data = this.props.location.pathname.split("/");
     // console.log(Date.parse(data[4]))
+    if(data[2] =="all"){
+      // console.log(data[2])
+      this.setState({
+        all: true
+      })
+    }
     this.setState({
       distance: data[2],
       activity: data[3],
@@ -63,12 +95,17 @@ class View extends Component {
             let rawEvents = response.val();
 
             let filteredEvents = [];
-            for( let eventA of rawEvents){
-              console.log(Date.parse(eventA.START_DATE))
-              let date = Date.parse(eventA.START_DATE);
-              if(eventA.CATEGORY == this.state.activity && (date >= this.state.date)){
-                filteredEvents.push(eventA);
+            console.log(this.state.all);
+            if(!this.state.all){
+              for( let eventA of rawEvents){
+                // console.log(Date.parse(eventA.START_DATE))
+                let date = Date.parse(eventA.START_DATE);
+                if(eventA.CATEGORY == this.state.activity && (date >= this.state.date)){
+                  filteredEvents.push(eventA);
+                }
               }
+            } else {
+              filteredEvents = rawEvents;
             }
             this.setState({events: filteredEvents});
           } )
@@ -142,6 +179,10 @@ class View extends Component {
           {searchResults}
         </GridList>
         </div>
+
+
+
+
 
       </div>
     )

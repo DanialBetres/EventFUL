@@ -32,6 +32,8 @@
     "firebase-admin": "^5.10.0",
     "firebase-functions": "^0.8.1",
     "fs-extra": "3.0.1",
+    "google-distance-matrix": "^1.1.1",
+    "google-maps-react": "^1.1.4",
     "html-webpack-plugin": "2.29.0",
     "jest": "20.0.4",
     "material-ui": "^0.20.0",
