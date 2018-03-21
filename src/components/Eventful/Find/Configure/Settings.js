@@ -74,10 +74,14 @@ class Settings extends Component{
         </RadioButtonGroup>
         <DropDownMenu value={this.state.dropValue} onChange={this.handleChange}>
           <MenuItem  value={"dummy"} primaryText="Eg. Eat, Exercise etc." />
-          <MenuItem  value={"Eat"} primaryText="Eat" />
-          <MenuItem  value={"Exercise"} primaryText="Exercise" />
-          <MenuItem  value={"Swim"} primaryText="Swim" />
-          <MenuItem  value={"Entertainment"} primaryText="Entertainment" />
+          <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
+          <MenuItem  value={"Community Events"} primaryText="Community Events" />
+          <MenuItem  value={"Committee of the whole meetings"} primaryText="Committee of the whole meetings" />
+          <MenuItem  value={"Special council meetings"} primaryText="Special council meetings" />
+          <MenuItem  value={"Uptown Events"} primaryText="Uptown Events" />
+          <MenuItem  value={"City Events"} primaryText="City Events" />
+          <MenuItem  value={"Business Events"} primaryText="Business Events" />
+          <MenuItem  value={"Environmental Events"} primaryText="Environmental Events" />
         </DropDownMenu>
 
         <DatePicker

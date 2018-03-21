@@ -19,16 +19,34 @@ class View extends Component {
     events:[],
     searchTerm : '',
     currentPage: 1,
-    todosPerPage: 6
+    todosPerPage: 6,
+    distance: 0,
+    activity: "",
+    date: ""
 
   };
   constructor (props){
     super(props)
     this.searchUpdated = this.searchUpdated.bind(this);
 
-    console.log(this.props.data);
+    let data = this.props.location.pathname.split("/");
+    this.setState({
+      distance: data[2],
+      activity: data[3],
+      date: data[4]
+    })
+
     // this.handleClick = this.handleClick.bind(this);
 
+  }
+
+  componentWillMount() {
+    let data = this.props.location.pathname.split("/");
+    this.setState({
+      distance: data[2],
+      activity: data[3],
+      date: data[4]
+    })
   }
   // handleClick(event) {
   //       this.setState({
@@ -41,7 +59,15 @@ class View extends Component {
         database.ref('/').once('value')
           .then( response => {
             let rawEvents = response.val();
-            this.setState({events: rawEvents});
+            // console.dir(rawEvents[0]);
+            let filteredEvents = [];
+            // console.log(this.state.activity)
+            for( let eventA of rawEvents){
+              if(eventA.CATEGORY == this.state.activity){
+                filteredEvents.push(eventA);
+              }
+            }
+            this.setState({events: filteredEvents});
             // console.log( response.data[0] );
           } )
           .catch( error => {
@@ -81,18 +107,24 @@ class View extends Component {
     const filteredEvents = this.state.events.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
 
     let searchResults = filteredEvents.map((res,i) => {
+        // console.log(res.CATEGORY.toString())
+
           return (
-            <GridTile
-              key={res.ID  + i}
-              title={res.TITLE}
-              subtitle={<span>Category: <b>{res.CATEGORY}</b></span>}>
-              <img alt='img' src={res.VIDEO} />
-            </GridTile>
+              <GridTile
+                key={res.ID  + i}
+                title={res.TITLE}
+                subtitle={<span>Category: <b>{res.CATEGORY}</b></span>}>
+                <img alt='img' src={res.VIDEO} />
+              </GridTile>
           )
+
+
+
     });
 
     return (
       <div>
+
         <SearchBar
          onChange={this.searchUpdated}
          onRequestSearch={() => console.log('onRequestSearch')}
