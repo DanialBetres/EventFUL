@@ -6,47 +6,94 @@ import Button from '../../../UI/Buttons/Button';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
+import Aux from '../../../../hoc/AuxA';
 // import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 // import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
 class Settings extends Component{
   state = {
-    dropDownValue : 1,
-    radioButtonValue: 1,
+    dropValue : "dummy",
+    date:"",
+    distance: 0
   }
-  handleChange = (event, index, dropDownValue) => this.setState({dropDownValue});
+
+  DateValueHandler = (event) =>{
+
+    console.dir(event);
+    console.dir(event.getDate());
+    console.dir(event.getMonth()+1);
+    console.dir(event.getFullYear());
+    this.setState({date:
+      event.getDate() +"-" +
+      (event.getMonth()+1) + "-" +
+      event.getFullYear()})
+    // console.log(x);
+  }
+  distanceHandler = (event) =>{
+    // let distance =
+    this.setState({distance: event.target.value})
+    console.log(event.target.value);
+  }
+
+
+
+  handleChange = (event, index, value) => {
+    // console.log( value);
+    this.setState({dropValue: value});
+    // console.log(this.state.value);
+  };
+  testButton = () => {
+
+    console.log(this.state.dropValue);
+    // console.log(this.state.value);
+  };
 
   render(){
     return(
       <div>
+      <Aux>
         <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
           <RadioButton
+            onClick={this.distanceHandler}
             value={1}
             label="< 1 km"
             className={classes.radioButton}
           />
           <RadioButton
+            onClick={this.distanceHandler}
             value={2}
             label="< 5 km"
             className={classes.radioButton}
           />
           <RadioButton
+            onClick={this.distanceHandler}
             value={3}
             label="5km +"
             className={classes.radioButton}
           />
         </RadioButtonGroup>
-        <DropDownMenu value={this.state.dropDownValue} onChange={this.handleChange}>
-          <MenuItem value={1} primaryText="Eg. Eat, Exercise etc." />
-          <MenuItem value={2} primaryText="Eat" />
-          <MenuItem value={3} primaryText="Exercise" />
-          <MenuItem value={4} primaryText="Swim" />
-          <MenuItem value={5} primaryText="Entertainment" />
+        <DropDownMenu value={this.state.dropValue} onChange={this.handleChange}>
+          <MenuItem  value={"dummy"} primaryText="Eg. Eat, Exercise etc." />
+          <MenuItem  value={"Eat"} primaryText="Eat" />
+          <MenuItem  value={"Exercise"} primaryText="Exercise" />
+          <MenuItem  value={"Swim"} primaryText="Swim" />
+          <MenuItem  value={"Entertainment"} primaryText="Entertainment" />
         </DropDownMenu>
-        
-        <DatePicker hintText="Choose a Date" />
-        <Button> Find </Button>
-      </div> 
+
+        <DatePicker
+            hintText="Choose a Date"
+            onChange={(x, event) => this.DateValueHandler(event)}
+            defaultDate={new Date()}
+
+             />
+        <Button
+          clicked={"/View/"+
+            this.state.distance +"/"+
+            this.state.dropValue + "/" +
+            this.state.date}
+        > Find </Button>
+      </Aux>
+      </div>
     );
     // return(
     //   <Aux>

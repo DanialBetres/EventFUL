@@ -8,8 +8,8 @@ const find = (props) =>{
 
   return (
     <div>
-      <Button> Find an Event </Button>
-      <Button> View All </Button>
+      <Button clicked="/Settings"> Find an Event </Button>
+      <Button clicked="/View"> View All </Button>
       <Button> Favourite </Button>
 
 

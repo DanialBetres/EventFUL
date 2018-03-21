@@ -9,7 +9,7 @@ import SearchBar from 'material-ui-search-bar';
 import {createFilter} from 'react-search-input'
 // import SearchInput, {createFilter} from 'react-search-input'
 import database from '../../../assets/database';
-
+import Aux from '../../../hoc/AuxA';
 
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
 
@@ -25,8 +25,10 @@ class View extends Component {
   constructor (props){
     super(props)
     this.searchUpdated = this.searchUpdated.bind(this);
+
+    console.log(this.props.data);
     // this.handleClick = this.handleClick.bind(this);
-    
+
   }
   // handleClick(event) {
   //       this.setState({
