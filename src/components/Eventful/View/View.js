@@ -49,11 +49,10 @@ class View extends Component {
     date: 0,
     all: false,
     address:'',
-    dest: '',
     distanceText:'',
     openModal: false,
     foundDistance: false,
-    distanceText: "",
+    dist: "",
     address: "New York NY",
     dest: "Montreal"
 
@@ -72,62 +71,7 @@ class View extends Component {
   closeModal = () =>{
     this.setState({openModal: false});
   }
-
-  getPosition = (position) =>{
-
-  }
-
   distanceBool = (event) => {
-    let dist = "";
-    let locationLat = 0;
-    let locationLng = 0;
-    Geocode.fromAddress("Waterloo On").then(
-      response =>{
-        locationLat = response.results[0].geometry.location.lat;
-        locationLng = response.results[0].geometry.location.lng;
-        // console.dir(response.results[0].geometry.location) ;
-        // console.log(lat,lng);
-      },
-      error =>{
-        console.error(error);
-      }
-    )
-
-    let tryA = navigator.geolocation.getCurrentPosition(
-      function(position) {
-        dist=  geolib.getDistance({latitude: position.coords.latitude, longitude:position.coords.longitude }, {
-            latitude: locationLat,
-            longitude: locationLng
-        });
-        // alert(  geolib.getDistance({latitude: position.coords.latitude, longitude:position.coords.longitude }, {
-        // // alert('You are ' + geolib.getDistance(position.coords, {
-        //     latitude: locationLat,
-        //     longitude: locationLng
-        // }));
-    },
-    function() {
-        alert('Position could not be determined.')
-    },
-    {
-        enableHighAccuracy: true
-    });
-    console.log(dist);
-    console.dir(tryA)
-    // navigator.geolocation.getCurrentPosition(
-    //   function(position) {
-    //       alert('You are ' + geolib.getDistance(position.coords, {
-    //           latitude: 51.525,
-    //           longitude: 7.4575
-    //       }) + ' meters away from 51.525, 7.4575');
-    //   },
-    //   function() {
-    //       alert('Position could not be determined.')
-    //   },
-    //   {
-    //       enableHighAccuracy: true
-    //   }
-    // );
-
 
     const component = this
     // const { address, dest } = this.state
@@ -135,62 +79,44 @@ class View extends Component {
     let dest = ["Vancouver, ON, CA"];
     let origins = ['San Francisco CA', '40.7421,-73.9914'];
     let destinations = ['New York NY', 'Montreal', '41.8337329,-87.7321554', 'Honolulu'];
-
+    let tryA = this;
+    let _this;
     event.preventDefault()
     // console.log(event)
     let service = new window.google.maps.DistanceMatrixService();
-    service.getDistanceMatrix({
+     service.getDistanceMatrix({
     origins: ["Waterloo ON"],
     destinations: ["Toronto ON"],
     travelMode: 'DRIVING',
     avoidHighways: false,
     avoidTolls: false
-  }, this.callback);
-    console.dir(service);
-    // GoogleMap.matrix(address, dest, function (err, distances) {
-    //     GoogleMap.key("AIzaSyBXvfbFh1UkUhlVI7vfycrxxCOUIDgWW0A");
-    //     GoogleMap.units('imperial');
-    //     console.log("address");
-    //     console.log(dest);
-    //     // console.log(err);
-    //     // console.log(distances);
-    //     if (err) {
-    //         return console.log(err);
-    //     }
-    //     if(!distances) {
-    //         return console.log('no distances');
-    //     }
-    //
-    //     if (distances.status == 'OK') {
-    //         if(distances.rows[0].elements[0])  {
-    //             var distance = distances.rows[0].elements[0].duration['text'];
-    //             console.log(distance);
-    //             component.setState({
-    //                 foundDistance: true,
-    //                 distanceText: distance
-    //             });
-    //         }
-    //     }
-    // });
-}
- callback = (response, status) =>{
-  if (status == 'OK') {
-    var origins = response.originAddresses;
-    var destinations = response.destinationAddresses;
+  }, function(response, status){
+   if (status == 'OK') {
+     var origins = response.originAddresses;
+     var destinations = response.destinationAddresses;
 
-    for (var i = 0; i < origins.length; i++) {
-      var results = response.rows[i].elements;
-      for (var j = 0; j < results.length; j++) {
-        var element = results[j];
-        var distance = element.distance.text;
-        var duration = element.duration.text;
-        var from = origins[i];
-        var to = destinations[j];
-        console.dir(distance)
-      }
-    }
+     for (var i = 0; i < origins.length; i++) {
+       var results = response.rows[i].elements;
+       for (var j = 0; j < results.length; j++) {
+         var element = results[j];
+         var distance = element.distance.text;
+         var duration = element.duration.text;
+         var from = origins[i];
+         var to = destinations[j];
+         // _this.
+         tryA.setState({
+           dist:distance
+         })
+         // console.dir(distance)
+         // tryA = distance;
+       }
+     }
 
-  }
+   }
+ });
+ // console.log(yoyo);
+ console.log(this.state.dist);
+
 }
 
   componentWillMount() {
@@ -222,17 +148,40 @@ class View extends Component {
             let rawEvents = response.val();
 
             let filteredEvents = [];
-            console.log(this.state.all);
             if(!this.state.all){
               for( let eventA of rawEvents){
                 // console.log(Date.parse(eventA.START_DATE))
                 let date = Date.parse(eventA.START_DATE);
+                let startDateArr = eventA.START_DATE.split(" ");
+                let endDateArr = eventA.END_DATE.split(" ");
+                let startDate = startDateArr[1];
+                let endDate = endDateArr[1];
+                startDate = this.tConvert(startDate);
+                endDate = this.tConvert(endDate);
+                eventA.START_DATE = startDateArr[0] + " " + startDate;
+                eventA.END_DATE = endDateArr[0] + " " + endDate;
                 if(eventA.CATEGORY == this.state.activity && (date >= this.state.date)){
                   filteredEvents.push(eventA);
                 }
               }
             } else {
-              filteredEvents = rawEvents;
+              for( let eventA of rawEvents){
+                // console.log(Date.parse(eventA.START_DATE))
+                let date = Date.parse(eventA.START_DATE);
+                let tmpEndDate = Date.parse(eventA.END_DATE);
+                let startDateArr = eventA.START_DATE.split(" ");
+                let endDateArr = eventA.END_DATE.split(" ");
+                let startDate = startDateArr[1];
+                let endDate = endDateArr[1];
+                startDate = this.tConvert(startDate);
+                endDate = this.tConvert(endDate);
+                eventA.START_DATE = startDateArr[0] + " " + startDate;
+                eventA.END_DATE = endDateArr[0] + " " + endDate;
+                if(tmpEndDate >= Date.now()){
+                  filteredEvents.push(eventA);
+                }
+
+              }
             }
             this.setState({events: filteredEvents});
           } )
@@ -240,36 +189,22 @@ class View extends Component {
               console.log( error );
           } );
   }
+   tConvert = (time) => {
+      // Check correct time format and split into components
+      time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
+      if (time.length > 1) { // If time format correct
+        time = time.slice (1);  // Remove full string match value
+        time[5] = +time[0] < 12 ? 'AM' : 'PM'; // Set AM/PM
+        time[0] = +time[0] % 12 || 12; // Adjust hours
+      }
+      return time.join (''); // return adjusted time or original string
+    }
   searchUpdated (term) {
     this.setState({searchTerm: term})
   }
 
   render() {
-    // const { events, currentPage, todosPerPage } = this.state;
-    // // Logic for displaying current todos
-    // const indexOfLastTodo = currentPage * todosPerPage;
-    // const indexOfFirstTodo = indexOfLastTodo - todosPerPage;
-    // const currentTodos = events.slice(indexOfFirstTodo, indexOfLastTodo);
-    // const renderTodos = currentTodos.map((events, index) => {
-    //   return <li key={index}>{events}</li>;
-    // });
 
-    // Logic for displaying page numbers
-    // const pageNumbers = [];
-    // for (let i = 1; i <= Math.ceil(events.length / todosPerPage); i++) {
-    //   pageNumbers.push(i);
-    // }
-    // const renderPageNumbers = pageNumbers.map(number => {
-    //   return (
-    //     <li
-    //       key={number}
-    //       id={number}
-    //       onClick={this.handleClick}
-    //     >
-    //       {number}
-    //     </li>
-    //   );
-    // });
     const filteredEvents = this.state.events.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     const {openModal} = this.state;
 
@@ -287,7 +222,13 @@ class View extends Component {
               <GridTile
                 key={res.ID  + i}
                 title={res.TITLE}
-                subtitle={<span>Category: <b>{res.CATEGORY}</b></span>}>
+                subtitle={
+                  <div>
+                  Start: <span><b>{res.START_DATE}</b></span>
+                  <br/>
+                  End: <span><b>{res.END_DATE}</b></span>
+                  </div>
+                }>
 
                 <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
               </GridTile>
@@ -316,11 +257,6 @@ class View extends Component {
           {searchResults}
         </GridList>
         </div>
-
-
-
-
-
       </div>
     )
   }
