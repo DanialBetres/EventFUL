@@ -4,7 +4,7 @@ import Find from '../Eventful/Find/Find';
 import Settings from '../Eventful/Find/Configure/Settings';
 import View from '../Eventful/View/View';
 import Aux from '../../hoc/AuxA';
-import { Route, NavLink, Switch, Link} from 'react-router-dom';
+import { Route, NavLink, Switch, Link, Redirect} from 'react-router-dom';
 
 
 class Layout extends Component{
@@ -15,6 +15,7 @@ class Layout extends Component{
             <Route path="/" exact component={Find} />
             <Route path="/Settings" component={Settings} />
             <Route path="/View" component={View} />
+            <Redirect from="*" to="/" />
           </Switch>
 
       </Aux>

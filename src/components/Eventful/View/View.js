@@ -46,13 +46,13 @@ class View extends Component {
     todosPerPage: 6,
     distance: 0,
     activity: '',
-    date: 0,
+    startDate: 0,
+    endDate: 0,
     all: false,
-    address:'',
     distanceText:'',
     openModal: false,
     foundDistance: false,
-    dist: "",
+    dist: 0,
     address: "New York NY",
     dest: "Montreal"
 
@@ -72,50 +72,53 @@ class View extends Component {
     this.setState({openModal: false});
   }
   distanceBool = (event) => {
-
-    const component = this
-    // const { address, dest } = this.state
-    let address = ["Toronto, ON, CA"];
-    let dest = ["Vancouver, ON, CA"];
-    let origins = ['San Francisco CA', '40.7421,-73.9914'];
-    let destinations = ['New York NY', 'Montreal', '41.8337329,-87.7321554', 'Honolulu'];
-    let tryA = this;
-    let _this;
-    event.preventDefault()
-    // console.log(event)
+    // console.dir(event);
+    let destination = [event];
+    let location = this;
+    let distFinal = 0;
     let service = new window.google.maps.DistanceMatrixService();
-     service.getDistanceMatrix({
-    origins: ["Waterloo ON"],
-    destinations: ["Toronto ON"],
-    travelMode: 'DRIVING',
-    avoidHighways: false,
-    avoidTolls: false
-  }, function(response, status){
-   if (status == 'OK') {
-     var origins = response.originAddresses;
-     var destinations = response.destinationAddresses;
 
-     for (var i = 0; i < origins.length; i++) {
-       var results = response.rows[i].elements;
-       for (var j = 0; j < results.length; j++) {
-         var element = results[j];
-         var distance = element.distance.text;
-         var duration = element.duration.text;
-         var from = origins[i];
-         var to = destinations[j];
-         // _this.
-         tryA.setState({
-           dist:distance
-         })
-         // console.dir(distance)
-         // tryA = distance;
+    return new Promise((resolve)=>{
+
+        service.getDistanceMatrix({
+        origins: ["Waterloo ON"],
+        destinations: destination,
+        travelMode: 'DRIVING',
+        avoidHighways: false,
+        avoidTolls: false
+      }, function(response, status){
+       if (status == 'OK') {
+         var origins = response.originAddresses;
+         var destinations = response.destinationAddresses;
+
+         for (var i = 0; i < origins.length; i++) {
+           var results = response.rows[i].elements;
+           for (var j = 0; j < results.length; j++) {
+             var element = results[j];
+             var distance = element.distance.text;
+             var duration = element.duration.text;
+             var from = origins[i];
+             var to = destinations[j];
+             // _this.
+             // console.log(distance);
+             location.distFinal = distance;
+             // return distance;
+             location.setState({
+               dist: distance
+             })
+             // return distance;
+             // return distance;
+             // console.dir(distance)
+             // tryA = distance;
+           }
+         }
+
        }
-     }
-
-   }
- });
- // console.log(yoyo);
- console.log(this.state.dist);
+       resolve(location.distFinal);
+     })
+    }).then((res)=>{
+      return res;
+    })
 
 }
 
@@ -131,7 +134,8 @@ class View extends Component {
     this.setState({
       distance: data[2],
       activity: data[3],
-      date: data[4]
+      startDate: data[4],
+      endDate: data[5]
     })
   }
   // handleClick(event) {
@@ -141,17 +145,19 @@ class View extends Component {
   // }
 
   componentDidMount () {
-      // axios.get( '/events.json' )
-        database.ref('/').once('value')
-          .then( response => {
-            // let rawEvents = response.data;
-            let rawEvents = response.val();
+      axios.get( '/events.json' )
 
+
+        // database.ref('/').once('value')
+          .then( response => {
+            let rawEvents = response.data;
+            // let rawEvents = response.val();
             let filteredEvents = [];
             if(!this.state.all){
               for( let eventA of rawEvents){
                 // console.log(Date.parse(eventA.START_DATE))
-                let date = Date.parse(eventA.START_DATE);
+                let sdate = Date.parse(eventA.START_DATE);
+                let edate = Date.parse(eventA.END_DATE);
                 let startDateArr = eventA.START_DATE.split(" ");
                 let endDateArr = eventA.END_DATE.split(" ");
                 let startDate = startDateArr[1];
@@ -160,7 +166,29 @@ class View extends Component {
                 endDate = this.tConvert(endDate);
                 eventA.START_DATE = startDateArr[0] + " " + startDate;
                 eventA.END_DATE = endDateArr[0] + " " + endDate;
-                if(eventA.CATEGORY == this.state.activity && (date >= this.state.date)){
+                // if(eventA.ADDRESS !== ""){
+                //   let distance = this.distanceBool();
+                //   console.log(eventA.ADDRESS)
+                //   console.log(distance)
+                //   // debugger;
+                // }
+                // console.log(eventA.LOCATION);
+
+                if(eventA.LOCATION){
+                  new Promise((resolve)=>{
+                    let x = this.distanceBool(eventA.LOCATION)
+
+                    resolve(x)
+                  }).then((res)=>{
+
+
+                    // testA = res;
+                    console.log(res)
+                  })
+                } else if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate)){
+                  filteredEvents.push(eventA);
+                }
+                else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate)){
                   filteredEvents.push(eventA);
                 }
               }
@@ -189,7 +217,7 @@ class View extends Component {
               console.log( error );
           } );
   }
-   tConvert = (time) => {
+  tConvert = (time) => {
       // Check correct time format and split into components
       time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
       if (time.length > 1) { // If time format correct

@@ -6,6 +6,7 @@ import Aux from '../../../hoc/AuxA';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const button = (props) =>{
+  
   // testPurpose = () =>{
   //   console.log(props.data);
   // }

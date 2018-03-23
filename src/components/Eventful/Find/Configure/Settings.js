@@ -12,26 +12,25 @@ import Aux from '../../../../hoc/AuxA';
 
 class Settings extends Component{
   state = {
-    dropValue : "dummy",
-    date:"",
+    dropValue : "Everything",
+    startDate:Date.now(),
+    endDate: (Date.now() + 7 * 24 * 60 * 60 * 1000),
     distance: 0
   }
 
-  DateValueHandler = (event) =>{
+  StartDateValueHandler = (event) =>{
 
-    console.dir(event);
-    console.dir(event.getDate());
-    console.dir(event.getMonth()+1);
-    console.dir(event.getFullYear());
     console.log(Date.parse(event))
     this.setState({
-      date: Date.parse(event)
+      startDate: Date.parse(event)
     })
-    // this.setState({date:
-    //   event.getDate() +"-" +
-    //   (event.getMonth()+1) + "-" +
-    //   event.getFullYear()})
-    // console.log(x);
+  }
+  EndDateValueHandler = (event) =>{
+
+    console.log(Date.parse(event))
+    this.setState({
+      endDate: Date.parse(event)
+    })
   }
   distanceHandler = (event) =>{
     // let distance =
@@ -77,7 +76,7 @@ class Settings extends Component{
           />
         </RadioButtonGroup>
         <DropDownMenu value={this.state.dropValue} onChange={this.handleChange}>
-          <MenuItem  value={"dummy"} primaryText="Eg. Eat, Exercise etc." />
+          <MenuItem  value={"Everything"} primaryText="Everything" />
           <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
           <MenuItem  value={"Community Events"} primaryText="Community Events" />
           <MenuItem  value={"Committee of the whole meetings"} primaryText="Committee of the whole meetings" />
@@ -90,16 +89,21 @@ class Settings extends Component{
         </DropDownMenu>
 
         <DatePicker
-            hintText="Choose a Date"
-            onChange={(x, event) => this.DateValueHandler(event)}
+            hintText="Choose Start Date"
+            onChange={(x, event) => this.StartDateValueHandler(event)}
             defaultDate={new Date()}
-
+             />
+        <DatePicker
+            hintText="Choose End Date"
+            onChange={(x, event) => this.EndDateValueHandler(event)}
+            defaultDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
              />
         <Button
           clicked={"/View/"+
             this.state.distance +"/"+
             this.state.dropValue + "/" +
-            this.state.date}
+            this.state.startDate + "/"+
+            this.state.endDate }
         > Find </Button>
       </Aux>
       </div>
