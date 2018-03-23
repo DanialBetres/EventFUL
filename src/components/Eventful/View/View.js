@@ -104,13 +104,15 @@ class View extends Component {
     this.setState({openModal: false});
   }
   distanceBool = (event) => {
-    // console.dir(event);
+    console.dir(event);
     let destination = [event];
     let location = this;
     let distFinal = 0;
     let service = new window.google.maps.DistanceMatrixService();
 
-    const currLocation = this.state.latitude + " " + this.state.longitude;
+    let currLocation = this.state.latitude + " " + this.state.longitude;
+    console.log(currLocation);
+    currLocation = "43.4710453, -80.53913759999999"
     return new Promise((resolve)=>{
 
         service.getDistanceMatrix({
@@ -216,10 +218,10 @@ class View extends Component {
             // let rawEvents = response.data;
             let rawEvents = response.val();
             let filteredEvents = [];
-            console.dir(rawEvents);
+            // console.dir(rawEvents);
 
             if(!this.state.all){
-              console.log(rawEvents);
+              // console.log(rawEvents);
               // =======================This is if distance is everything ============================
               if(this.state.distance ==10){
 
@@ -247,8 +249,8 @@ class View extends Component {
 
 
               } else {
-                console.log(this.state.distance)
-                console.log(rawEvents);
+                // console.log(this.state.distance)
+                // console.log(rawEvents);
                 // ===========================================This is if distance is required========
                 for( let eventA of rawEvents){
 
@@ -272,7 +274,7 @@ class View extends Component {
                       resolve(x)
                     }).then((res)=>{
                       let dist = parseFloat(res);
-                      console.log(dist)
+                      // console.log(dist)
                       if(this.state.distance ==5 && dist > this.state.distance){
                         this.setState({distBool: true})
                       } else if (this.state.distance ==4.9 && dist<5 && dist>1){
@@ -298,7 +300,7 @@ class View extends Component {
               }
 
             } else {
-              console.log(rawEvents);
+              // console.log(rawEvents);
               for( let eventA of rawEvents){
                 if(eventA.ID != null){
                   // console.log(eventA);
@@ -329,162 +331,7 @@ class View extends Component {
           } );
       }//This is for the beginning if statement
   }
-//   componentDidMount () {
-//
-//
-//     if(this.state.favourite){
-//       database.ref('/favourite/').once('value')
-//         .then( response => {
-//           // let rawEvents = response.data;
-//           let rawEvents = response.val();
-//
-//           console.dir(rawEvents);
-//
-//           let filteredEvents = [];
-//           for(let i=0; i <rawEvents.length;i++){
-//
-//             let eventA = rawEvents[i];
-//             if(eventA != null){
-//               console.log(eventA)
-//
-//               let sdate = Date.parse(eventA.START_DATE);
-//               let edate = Date.parse(eventA.END_DATE);
-//               let startDateArr = eventA.START_DATE.split(" ");
-//               let endDateArr = eventA.END_DATE.split(" ");
-//               let startDate = startDateArr[1];
-//               let endDate = endDateArr[1];
-//               startDate = this.tConvert(startDate);
-//               endDate = this.tConvert(endDate);
-//               eventA.START_DATE = startDateArr[0] + " " + startDate;
-//               eventA.END_DATE = endDateArr[0] + " " + endDate;
-//
-//               filteredEvents.push(eventA);
-//             }
-//           }
-//           console.log(rawEvents);
-//           this.setState({events: filteredEvents});
-//
-//         });
-//
-//         this.setState({favourite:false})
-//
-//
-//     } else {
-//
-//
-//       // axios.get( '/events.json' )
-//         database.ref('/').once('value')
-//           .then( response => {
-//             // let rawEvents = response.data;
-//             let rawEvents = response.val();
-//             let filteredEvents = [];
-//             console.dir(rawEvents);
-//
-//             if(!this.state.all){
-// console.log(rawEvents);
-//               // =======================This is if distance is everything ============================
-//               if(this.state.distance ==10){
-//
-//                 for( let eventA of rawEvents){
-//                   let sdate = Date.parse(eventA.START_DATE);
-//                   let edate = Date.parse(eventA.END_DATE);
-//                   let startDateArr = eventA.START_DATE.split(" ");
-//                   let endDateArr = eventA.END_DATE.split(" ");
-//                   let startDate = startDateArr[1];
-//                   let endDate = endDateArr[1];
-//                   startDate = this.tConvert(startDate);
-//                   endDate = this.tConvert(endDate);
-//                   eventA.START_DATE = startDateArr[0] + " " + startDate;
-//                   eventA.END_DATE = endDateArr[0] + " " + endDate;
-//
-//                   if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate)){
-//                     filteredEvents.push(eventA);
-//                   }
-//                   else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate)){
-//                     filteredEvents.push(eventA);
-//                   }
-//                 }
-//
-//
-//               } else {
-//                 console.log(this.state.distance)
-//                 console.log(rawEvents);
-//                 // ===========================================This is if distance is required========
-//                 for( let eventA of rawEvents){
-//                   // console.log(Date.parse(eventA.START_DATE))
-//                   let sdate = Date.parse(eventA.START_DATE);
-//                   let edate = Date.parse(eventA.END_DATE);
-//                   let startDateArr = eventA.START_DATE.split(" ");
-//                   let endDateArr = eventA.END_DATE.split(" ");
-//                   let startDate = startDateArr[1];
-//                   let endDate = endDateArr[1];
-//                   startDate = this.tConvert(startDate);
-//                   endDate = this.tConvert(endDate);
-//                   eventA.START_DATE = startDateArr[0] + " " + startDate;
-//                   eventA.END_DATE = endDateArr[0] + " " + endDate;
-//
-//                   if(eventA.LOCATION){
-//                     new Promise((resolve)=>{
-//                       let x = this.distanceBool(eventA.LOCATION)
-//
-//                       resolve(x)
-//                     }).then((res)=>{
-//                       let dist = parseFloat(res);
-//                       console.log(dist)
-//                       if(this.state.distance ==5 && dist > this.state.distance){
-//                         this.setState({distBool: true})
-//                       } else if (this.state.distance ==4.9 && dist<5 && dist>1){
-//                         this.setState({distBool: true})
-//                       } else if (this.state.distance ==1 && dist<1){
-//                         this.setState({distBool: true})
-//                       }
-//                       eventA.DISTANCE = res;
-//                       // console.log(this.state.distance);
-//                       // console.log(this.state.distBool);
-//                       if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && this.state.distBool ){
-//                         filteredEvents.push(eventA);
-//                       } else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate) &&this.state.distBool){
-//                         filteredEvents.push(eventA);
-//                       }
-//                     }).then(()=>{
-//                       this.setState({distBool: false});
-//                     })
-//
-//                   }
-//                 }
-//               }
-//
-//             } else {
-//               console.log(rawEvents);
-//               let test =  Object.keys(rawEvents).map(function(key) {
-//                 return [Number(key), rawEvents[key]];
-//               });
-//               for( let eventA of test){
-//                 console.log(eventA);
-//                 // console.log(Date.parse(eventA.START_DATE))
-//                 let date = Date.parse(eventA.START_DATE);
-//                 let tmpEndDate = Date.parse(eventA.END_DATE);
-//                 let startDateArr = eventA.START_DATE.split(" ");
-//                 let endDateArr = eventA.END_DATE.split(" ");
-//                 let startDate = startDateArr[1];
-//                 let endDate = endDateArr[1];
-//                 startDate = this.tConvert(startDate);
-//                 endDate = this.tConvert(endDate);
-//                 eventA.START_DATE = startDateArr[0] + " " + startDate;
-//                 eventA.END_DATE = endDateArr[0] + " " + endDate;
-//                 if(tmpEndDate >= Date.now()){
-//                   filteredEvents.push(eventA);
-//                 }
-//
-//               }
-//             }
-//             this.setState({events: filteredEvents});
-//           } )
-//           .catch( error => {
-//               console.log( error );
-//           } );
-//       }//This is for the beginning if statement
-//   }
+
   tConvert = (time) => {
       // Check correct time format and split into components
       time = time.toString ().match (/^([01]\d|2[0-3])(:)([0-5]\d)(:[0-5]\d)?$/) || [time];
