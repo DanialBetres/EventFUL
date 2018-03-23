@@ -49,13 +49,9 @@ class View extends Component {
     startDate: 0,
     endDate: 0,
     all: false,
-    distanceText:'',
     openModal: false,
-    foundDistance: false,
     dist: 0,
-    address: "New York NY",
-    dest: "Montreal"
-
+    distBool: false
 
   };
   constructor (props){
@@ -65,6 +61,34 @@ class View extends Component {
     // this.handleClick = this.handleClick.bind(this);
 
   }
+  componentWillMount() {
+    let data = this.props.location.pathname.split("/");
+    // console.log(Date.parse(data[4]))
+    if(data[2] =="all"){
+      // console.log(data[2])
+      this.setState({
+        all: true
+      })
+    }
+    this.setState({
+      distance: data[2],
+      activity: data[3],
+      startDate: data[4],
+      endDate: data[5]
+    })
+    const location = window.navigator && window.navigator.geolocation;
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+  }
+
   openModal =() =>{
     this.setState({openModal: true});
   }
@@ -78,10 +102,11 @@ class View extends Component {
     let distFinal = 0;
     let service = new window.google.maps.DistanceMatrixService();
 
+    const currLocation = this.state.latitude + " " + this.state.longitude;
     return new Promise((resolve)=>{
 
         service.getDistanceMatrix({
-        origins: ["Waterloo ON"],
+        origins: [currLocation],
         destinations: destination,
         travelMode: 'DRIVING',
         avoidHighways: false,
@@ -106,10 +131,6 @@ class View extends Component {
              location.setState({
                dist: distance
              })
-             // return distance;
-             // return distance;
-             // console.dir(distance)
-             // tryA = distance;
            }
          }
 
@@ -122,22 +143,7 @@ class View extends Component {
 
 }
 
-  componentWillMount() {
-    let data = this.props.location.pathname.split("/");
-    // console.log(Date.parse(data[4]))
-    if(data[2] =="all"){
-      // console.log(data[2])
-      this.setState({
-        all: true
-      })
-    }
-    this.setState({
-      distance: data[2],
-      activity: data[3],
-      startDate: data[4],
-      endDate: data[5]
-    })
-  }
+
   // handleClick(event) {
   //       this.setState({
   //         currentPage: Number(event.target.id)
@@ -145,53 +151,88 @@ class View extends Component {
   // }
 
   componentDidMount () {
-      axios.get( '/events.json' )
-
-
-        // database.ref('/').once('value')
+      // axios.get( '/events.json' )
+        database.ref('/').once('value')
           .then( response => {
-            let rawEvents = response.data;
-            // let rawEvents = response.val();
+            // let rawEvents = response.data;
+            let rawEvents = response.val();
             let filteredEvents = [];
             if(!this.state.all){
-              for( let eventA of rawEvents){
-                // console.log(Date.parse(eventA.START_DATE))
-                let sdate = Date.parse(eventA.START_DATE);
-                let edate = Date.parse(eventA.END_DATE);
-                let startDateArr = eventA.START_DATE.split(" ");
-                let endDateArr = eventA.END_DATE.split(" ");
-                let startDate = startDateArr[1];
-                let endDate = endDateArr[1];
-                startDate = this.tConvert(startDate);
-                endDate = this.tConvert(endDate);
-                eventA.START_DATE = startDateArr[0] + " " + startDate;
-                eventA.END_DATE = endDateArr[0] + " " + endDate;
-                // if(eventA.ADDRESS !== ""){
-                //   let distance = this.distanceBool();
-                //   console.log(eventA.ADDRESS)
-                //   console.log(distance)
-                //   // debugger;
-                // }
-                // console.log(eventA.LOCATION);
 
-                if(eventA.LOCATION){
-                  new Promise((resolve)=>{
-                    let x = this.distanceBool(eventA.LOCATION)
+              // =======================This is if distance is everything ============================
+              if(this.state.distance ==10){
 
-                    resolve(x)
-                  }).then((res)=>{
+                for( let eventA of rawEvents){
+                  let sdate = Date.parse(eventA.START_DATE);
+                  let edate = Date.parse(eventA.END_DATE);
+                  let startDateArr = eventA.START_DATE.split(" ");
+                  let endDateArr = eventA.END_DATE.split(" ");
+                  let startDate = startDateArr[1];
+                  let endDate = endDateArr[1];
+                  startDate = this.tConvert(startDate);
+                  endDate = this.tConvert(endDate);
+                  eventA.START_DATE = startDateArr[0] + " " + startDate;
+                  eventA.END_DATE = endDateArr[0] + " " + endDate;
 
-
-                    // testA = res;
-                    console.log(res)
-                  })
-                } else if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate)){
-                  filteredEvents.push(eventA);
+                  if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate)){
+                    filteredEvents.push(eventA);
+                  }
+                  else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate)){
+                    filteredEvents.push(eventA);
+                  }
                 }
-                else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate)){
-                  filteredEvents.push(eventA);
+
+
+              } else {
+                console.log(this.state.distance)
+                // ===========================================This is if distance is required========
+                for( let eventA of rawEvents){
+                  // console.log(Date.parse(eventA.START_DATE))
+                  let sdate = Date.parse(eventA.START_DATE);
+                  let edate = Date.parse(eventA.END_DATE);
+                  let startDateArr = eventA.START_DATE.split(" ");
+                  let endDateArr = eventA.END_DATE.split(" ");
+                  let startDate = startDateArr[1];
+                  let endDate = endDateArr[1];
+                  startDate = this.tConvert(startDate);
+                  endDate = this.tConvert(endDate);
+                  eventA.START_DATE = startDateArr[0] + " " + startDate;
+                  eventA.END_DATE = endDateArr[0] + " " + endDate;
+
+                  if(eventA.LOCATION){
+                    new Promise((resolve)=>{
+                      let x = this.distanceBool(eventA.LOCATION)
+
+                      resolve(x)
+                    }).then((res)=>{
+                      let dist = parseFloat(res);
+                      console.log(dist)
+                      if(this.state.distance ==5 && dist > this.state.distance){
+                        this.setState({distBool: true})
+                      } else if (this.state.distance ==4.9 && dist<5 && dist>1){
+                        this.setState({distBool: true})
+                      } else if (this.state.distance ==1 && dist<1){
+                        this.setState({distBool: true})
+                      }
+                      eventA.DISTANCE = res;
+                      // console.log(this.state.distance);
+                      // console.log(this.state.distBool);
+                      if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && this.state.distBool ){
+                        filteredEvents.push(eventA);
+                      } else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate) &&this.state.distBool){
+                        filteredEvents.push(eventA);
+                      }
+                    }).then(()=>{
+                      this.setState({distBool: false});
+                    })
+
+                  }
+
+
                 }
+
               }
+
             } else {
               for( let eventA of rawEvents){
                 // console.log(Date.parse(eventA.START_DATE))
@@ -255,6 +296,8 @@ class View extends Component {
                   Start: <span><b>{res.START_DATE}</b></span>
                   <br/>
                   End: <span><b>{res.END_DATE}</b></span>
+                  <br/>
+                  {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
                   </div>
                 }>
 
@@ -275,7 +318,6 @@ class View extends Component {
            maxWidth: 500
          }}
         />
-        <button onClick={this.distanceBool}>Hello </button>
         <br/>
         <br/>
         <div className={classes.root}>

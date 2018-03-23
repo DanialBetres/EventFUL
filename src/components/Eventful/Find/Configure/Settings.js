@@ -15,19 +15,19 @@ class Settings extends Component{
     dropValue : "Everything",
     startDate:Date.now(),
     endDate: (Date.now() + 7 * 24 * 60 * 60 * 1000),
-    distance: 0
+    distance: 10
   }
 
   StartDateValueHandler = (event) =>{
 
-    console.log(Date.parse(event))
+    // console.log(Date.parse(event))
     this.setState({
       startDate: Date.parse(event)
     })
   }
   EndDateValueHandler = (event) =>{
 
-    console.log(Date.parse(event))
+    // console.log(Date.parse(event))
     this.setState({
       endDate: Date.parse(event)
     })
@@ -35,7 +35,7 @@ class Settings extends Component{
   distanceHandler = (event) =>{
     // let distance =
     this.setState({distance: event.target.value})
-    console.log(event.target.value);
+    // console.log(event.target.value);
   }
 
 
@@ -45,11 +45,7 @@ class Settings extends Component{
     this.setState({dropValue: value});
     // console.log(this.state.value);
   };
-  testButton = () => {
 
-    console.log(this.state.dropValue);
-    // console.log(this.state.value);
-  };
 
   render(){
     return(
@@ -64,14 +60,20 @@ class Settings extends Component{
           />
           <RadioButton
             onClick={this.distanceHandler}
-            value={2}
+            value={4.9}
             label="< 5 km"
             className={classes.radioButton}
           />
           <RadioButton
             onClick={this.distanceHandler}
-            value={3}
+            value={5}
             label="5km +"
+            className={classes.radioButton}
+          />
+          <RadioButton
+            onClick={this.distanceHandler}
+            value={10}
+            label="Everywhere"
             className={classes.radioButton}
           />
         </RadioButtonGroup>
