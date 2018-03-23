@@ -17,7 +17,7 @@ import Modal from 'react-responsive-modal';
 import geolib from 'geolib';
 import {geolocated} from 'react-geolocated';
 import Geocode from "react-geocode";
-
+// import { withScriptjs, withGoogleMap,  Marker } from "google-maps-react"
 
 
 
@@ -327,9 +327,17 @@ class View extends Component {
           {searchResults}
         </GridList>
         </div>
+
+
       </div>
     )
   }
 }
+// <GoogleMap
+//   defaultZoom={8}
+//   defaultCenter={{ lat: this.state.latitude, lng: this.state.longitude }}
+// >
+//   {<Marker position={{ lat: this.state.latitude, lng: this.state.longitude }} />}
+// </GoogleMap>
 
 export default View;
