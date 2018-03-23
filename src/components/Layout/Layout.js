@@ -15,6 +15,7 @@ class Layout extends Component{
             <Route path="/" exact component={Find} />
             <Route path="/Settings" component={Settings} />
             <Route path="/View" component={View} />
+            <Route path="/Favourite" component={View} />
             <Redirect from="*" to="/" />
           </Switch>
 

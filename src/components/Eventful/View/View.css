@@ -12,3 +12,8 @@
   height: 500;
   overflowY: 'auto';
 }
+
+.favoriteButton {
+  marign-left: - 500px;
+  margin-right: -10%;
+}

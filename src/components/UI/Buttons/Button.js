@@ -3,10 +3,11 @@ import classes from './Button.js';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Route} from 'react-router-dom';
 import Aux from '../../../hoc/AuxA';
+import findStyles from '../../Eventful/Find/Find.css';
 // import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 const button = (props) =>{
-  
+
   // testPurpose = () =>{
   //   console.log(props.data);
   // }
@@ -21,7 +22,9 @@ const button = (props) =>{
           }}
         label={props.children}
         primary={true}
-        className={classes.style} >  </RaisedButton>
+        className={classes.style}> </RaisedButton>
+
+
       )} />
     </Aux>
     </div>
