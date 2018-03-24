@@ -2,9 +2,9 @@
     display: "flex";
     flexWrap: "wrap";
     justifyContent: "space-around";
-    height: 500px;
+    height: 550px;
     overflow: scroll;
-    width: 50%;
+    width: 70%;
     margin: 0 auto;
 },
 .gridList {
@@ -12,8 +12,25 @@
   height: 500;
   overflowY: 'auto';
 }
+.information {
+  margin-bottom: -10%;
+}
 
 .favoriteButton {
   marign-left: - 500px;
   margin-right: -10%;
 }
+.button {
+    margin-left: 80%;
+    margin-bottom:  -20%;
+  }
+.exampleImageInput {
+    cursor: 'pointer';
+    position: 'absolute';
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    width: '100%';
+    opacity: 0;
+  }

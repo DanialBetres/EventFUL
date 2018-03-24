@@ -1,26 +1,19 @@
 import React, {Component} from 'react';
 import classes from './View.css';
 import {GridList, GridTile} from 'material-ui/GridList';
-// import IconButton from 'material-ui/IconButton';
-// import Subheader from 'material-ui/Subheader';
-// import StarBorder from 'material-ui/svg-icons/toggle/star-border';
-import axios from 'axios';
 import SearchBar from 'material-ui-search-bar';
 import {createFilter} from 'react-search-input'
-// import SearchInput, {createFilter} from 'react-search-input'
 import database from '../../../assets/database';
-import Aux from '../../../hoc/AuxA';
-// import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 import GoogleMap from 'google-distance-matrix';
 import 'react-responsive-modal/lib/react-responsive-modal.css';
 import Modal from 'react-responsive-modal';
-import geolib from 'geolib';
-import {geolocated} from 'react-geolocated';
-import Geocode from "react-geocode";
 import IconButton from 'material-ui/IconButton';
 import ActionGrade from 'material-ui/svg-icons/action/grade';
-// import { withScriptjs, withGoogleMap,  Marker } from "google-maps-react"
-
+import FontIcon from 'material-ui/FontIcon';
+import RaisedButton from 'material-ui/RaisedButton';
+import Footer from '../../Layout/Footer/Footer';
+import Header from '../../Layout/Header/Header';
+import Flexbox from 'flexbox-react';
 
 
 
@@ -95,6 +88,21 @@ class View extends Component {
         this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
       })
     }
+    if(this.state.latitude == null || this.state.longitude ==null){
+      this.setState({
+        latitude: 43.4710453,
+        longitude: -80.53913759999999
+      })
+    }
+    let geocoder = new window.google.maps.Geocoder();
+    let latlng = new window.google.maps.LatLng(this.state.latitude, this.state.longitude);
+    geocoder.geocode({'latLng': latlng}, function(results, status) {
+      if(status == window.google.maps.GeocoderStatus.OK) {
+          console.dir(results[0]['formatted_address'])
+      };
+    });
+
+
   }
 
   openModal =() =>{
@@ -104,15 +112,15 @@ class View extends Component {
     this.setState({openModal: false});
   }
   distanceBool = (event) => {
-    console.dir(event);
+    // console.dir(event);
     let destination = [event];
     let location = this;
-    let distFinal = 0;
     let service = new window.google.maps.DistanceMatrixService();
 
     let currLocation = this.state.latitude + " " + this.state.longitude;
-    console.log(currLocation);
-    currLocation = "43.4710453, -80.53913759999999"
+    // console.log(currLocation);
+
+    // currLocation = "43.4710453, -80.53913759999999"
     return new Promise((resolve)=>{
 
         service.getDistanceMatrix({
@@ -152,6 +160,19 @@ class View extends Component {
     })
 
 }
+ setMarker = (map) => {
+  const uluru = { lat: this.state.latitude, lng: this.state.longitude };
+  const marker = new window.google.maps.Marker({
+    position: uluru,
+    map: map
+  });
+  window.google.maps.event.addListener(marker, 'click', function() {
+    const infoWindow = new window.google.maps.InfoWindow({
+      content: "<b>Header</b><div>Info Content</div>"
+    });
+    infoWindow.open(map, marker);
+  })
+};
   favouriteEvent = (event,i) => {
     database.ref('/569/' + i ).set(event);
 
@@ -305,7 +326,6 @@ class View extends Component {
                 if(eventA.ID != null){
                   // console.log(eventA);
                   // console.log(Date.parse(eventA.START_DATE))
-                  let date = Date.parse(eventA.START_DATE);
                   let tmpEndDate = Date.parse(eventA.END_DATE);
                   // console.log(eventA)
                   let startDateArr = eventA.START_DATE.split(" ");
@@ -350,17 +370,14 @@ class View extends Component {
 
     const filteredEvents = this.state.events.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     const {openModal} = this.state;
+    const mapOptions = {
+      zoom: 10,
+      center: { lat: this.state.latitude, lng: this.state.longitude }
+    }
 
     let searchResults = filteredEvents.map((res,i) => {
         // console.log(res.CATEGORY.toString())
-        // <button onClick={this.openModal}>Open modal</button>
-        // <Modal open={openModal} onClose={this.closeModal} little>
-        //   <p>
-        //     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
-        //     pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet
-        //     hendrerit risus, sed porttitor quam.
-        //   </p>
-        // </Modal>
+
           return (
               <GridTile
                 key={res.ID  + i}
@@ -372,12 +389,25 @@ class View extends Component {
                     End: <span><b>{res.END_DATE}</b></span>
                     <br/>
                     {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
+                    <Modal open={openModal} onClose={this.closeModal} little>
+                      <p>
+                      {res.DETAILS}
+                      </p>
+                    </Modal>
                   </div>
                 }>
+                <RaisedButton
+                  onClick={this.openModal}
+                  target="_blank"
+                  label="Info"
+                  className={classes.button}
+                  icon={<FontIcon className="help" />}
+                />
                 <IconButton
-                  tooltip="bottom-right"
+                  tooltip="Favourite This"
+                  className={classes.button}
                   touch={true}
-                  tooltipPosition="bottom-right"
+                  tooltipPosition="top-right"
                   onClick={()=>{this.favouriteEvent(res,i)}}>
                   <ActionGrade />
                 </IconButton>
@@ -389,6 +419,7 @@ class View extends Component {
 
     return (
       <div>
+        <Header />
 
         <SearchBar
          onChange={this.searchUpdated}
@@ -402,13 +433,13 @@ class View extends Component {
         <br/>
         <div className={classes.root}>
         <GridList
-          cellHeight={200}
+          cellHeight={300}
           className={classes.gridList}>
           {searchResults}
         </GridList>
         </div>
 
-
+        <Footer/>
       </div>
     )
   }

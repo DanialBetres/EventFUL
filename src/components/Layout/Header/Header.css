@@ -1,0 +1,8 @@
+.header{
+  /* margin-bottom: -10%; */
+  /* position: relative; */
+  position:fixed;
+  left:0px;
+  top:0px;
+  width:100%;
+}

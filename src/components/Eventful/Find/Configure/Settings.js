@@ -6,7 +6,9 @@ import Button from '../../../UI/Buttons/Button';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
-import Aux from '../../../../hoc/AuxA';
+import Footer from '../../../Layout/Footer/Footer';
+import Header from '../../../Layout/Header/Header';
+import Flexbox from 'flexbox-react';
 // import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 // import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
@@ -50,33 +52,40 @@ class Settings extends Component{
   render(){
     return(
       <div>
-      <Aux>
-        <RadioButtonGroup name="shipSpeed" defaultSelected="not_light">
-          <RadioButton
-            onClick={this.distanceHandler}
-            value={1}
-            label="< 1 km"
-            className={classes.radioButton}
-          />
-          <RadioButton
-            onClick={this.distanceHandler}
-            value={4.9}
-            label="< 5 km"
-            className={classes.radioButton}
-          />
-          <RadioButton
-            onClick={this.distanceHandler}
-            value={5}
-            label="5km +"
-            className={classes.radioButton}
-          />
-          <RadioButton
-            onClick={this.distanceHandler}
-            value={10}
-            label="Everywhere"
-            className={classes.radioButton}
-          />
-        </RadioButtonGroup>
+        <Header />
+        <Flexbox className={classes.flex} flexDirection="column" align="center" >
+
+          <h4> Willing to travel ... </h4>
+          <RadioButtonGroup name="shipSpeed" defaultSelected={10}>
+            <RadioButton
+              onClick={this.distanceHandler}
+              value={1}
+              label="< 1 km"
+              className={classes.radioButton}
+            />
+            <RadioButton
+              onClick={this.distanceHandler}
+              value={4.9}
+              label="< 5 km"
+              className={classes.radioButton}
+            />
+            <RadioButton
+              onClick={this.distanceHandler}
+              value={5}
+              label="5km +"
+              className={classes.radioButton}
+            />
+            <RadioButton
+              onClick={this.distanceHandler}
+              value={10}
+              label="Everywhere"
+              className={classes.radioButton}
+            />
+          </RadioButtonGroup>
+
+
+
+          <h4> I want to do ... </h4>
         <DropDownMenu value={this.state.dropValue} onChange={this.handleChange}>
           <MenuItem  value={"Everything"} primaryText="Everything" />
           <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
@@ -89,6 +98,8 @@ class Settings extends Component{
           <MenuItem  value={"Environmental Events"} primaryText="Environmental Events" />
           <MenuItem  value={"Exhibit"} primaryText="Exhibit" />
         </DropDownMenu>
+
+        <h4> Start Date </h4>
 
         <DatePicker
             hintText="Choose Start Date"
@@ -106,8 +117,10 @@ class Settings extends Component{
             this.state.dropValue + "/" +
             this.state.startDate + "/"+
             this.state.endDate }
-        > Find </Button>
-      </Aux>
+        > Search </Button>
+
+        <Footer/>
+        </Flexbox>
       </div>
     );
     // return(

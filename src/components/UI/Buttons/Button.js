@@ -22,7 +22,7 @@ const button = (props) =>{
           }}
         label={props.children}
         primary={true}
-        className={classes.style}> </RaisedButton>
+        style={props.sty}>  </RaisedButton>
 
 
       )} />
