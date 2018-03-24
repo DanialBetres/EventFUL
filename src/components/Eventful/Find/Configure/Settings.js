@@ -4,6 +4,7 @@ import classes from './Settings.css';
 import DatePicker from 'material-ui/DatePicker';
 import Button from '../../../UI/Buttons/Button';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Footer from '../../../Layout/Footer/Footer';
@@ -52,6 +53,7 @@ class Settings extends Component{
   render(){
     return(
       <div>
+
         <Header />
         <Flexbox className={classes.flex} flexDirection="column" align="center" >
 
@@ -86,7 +88,7 @@ class Settings extends Component{
 
 
           <h4> I want to do ... </h4>
-        <DropDownMenu value={this.state.dropValue} onChange={this.handleChange}>
+        <SelectField value={this.state.dropValue} onChange={this.handleChange} autoWidth={true}>
           <MenuItem  value={"Everything"} primaryText="Everything" />
           <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
           <MenuItem  value={"Community Events"} primaryText="Community Events" />
@@ -97,7 +99,7 @@ class Settings extends Component{
           <MenuItem  value={"Business Events"} primaryText="Business Events" />
           <MenuItem  value={"Environmental Events"} primaryText="Environmental Events" />
           <MenuItem  value={"Exhibit"} primaryText="Exhibit" />
-        </DropDownMenu>
+        </SelectField>
 
         <h4> Start Date </h4>
 
@@ -106,18 +108,28 @@ class Settings extends Component{
             onChange={(x, event) => this.StartDateValueHandler(event)}
             defaultDate={new Date()}
              />
+        <h4> End Date </h4>
         <DatePicker
             hintText="Choose End Date"
             onChange={(x, event) => this.EndDateValueHandler(event)}
             defaultDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
              />
-        <Button
-          clicked={"/View/"+
-            this.state.distance +"/"+
-            this.state.dropValue + "/" +
-            this.state.startDate + "/"+
-            this.state.endDate }
-        > Search </Button>
+
+        <Flexbox flexDirection="row">
+          <Button
+            clicked={"/"}
+          > Cancel </Button>
+          <div className={classes.space}> </div>
+          <Button
+            clicked={"/View/"+
+              this.state.distance +"/"+
+              this.state.dropValue + "/" +
+              this.state.startDate + "/"+
+              this.state.endDate }
+          > Search </Button>
+
+
+        </Flexbox>
 
         <Footer/>
         </Flexbox>

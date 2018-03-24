@@ -14,7 +14,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
 import Flexbox from 'flexbox-react';
-
+import Paper from 'material-ui/Paper';
 
 
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
@@ -378,7 +378,39 @@ class View extends Component {
     let searchResults = filteredEvents.map((res,i) => {
         // console.log(res.CATEGORY.toString())
 
+          // return (
+          //   <Paper key={res.ID  + i} style={style} zDepth={1} circle={true}>
+          //     <h4> {res.TITLE} </h4>
+          //     <div>
+          //       Start: <span><b>{res.START_DATE}</b></span>
+          //       <br/>
+          //       End: <span><b>{res.END_DATE}</b></span>
+          //       <br/>
+          //       {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
+          //         <p>
+          //         {res.DETAILS}
+          //         </p>
+          //     </div>
+          //
+          //     <IconButton
+          //       tooltip="Favourite This"
+          //       className={classes.button}
+          //       touch={true}
+          //       tooltipPosition="top-right"
+          //       onClick={()=>{this.favouriteEvent(res,i)}}>
+          //       <ActionGrade />
+          //     </IconButton>
+          //   </Paper>
+          //
+          //
+          //
+          // )
+          // <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
           return (
+            <Paper  style={style} zDepth={5} >
+            <br/>
+            <br/>
+            <br/>
               <GridTile
                 key={res.ID  + i}
                 title={res.TITLE}
@@ -411,35 +443,50 @@ class View extends Component {
                   onClick={()=>{this.favouriteEvent(res,i)}}>
                   <ActionGrade />
                 </IconButton>
-                <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
               </GridTile>
+              <br/>
+              <br/>
+              <br/>
+              </Paper>
           )
 
     });
+    const style = {
+      height: "80%",
+      width: "90%",
+      margin: 20,
+      textAlign: 'center',
+      display: 'inline-block',
+    };
 
     return (
       <div>
         <Header />
-
-        <SearchBar
-         onChange={this.searchUpdated}
-         onRequestSearch={() => console.log('onRequestSearch')}
-         style={{
-           margin: '0 auto',
-           maxWidth: 500
-         }}
-        />
-        <br/>
-        <br/>
-        <div className={classes.root}>
-        <GridList
-          cellHeight={300}
-          className={classes.gridList}>
-          {searchResults}
-        </GridList>
-        </div>
-
+        <Flexbox className={classes.flex} align="center">
+          <br/>
+          <Paper  style={style} zDepth={5} >
+            <br/>
+          <SearchBar
+           onChange={this.searchUpdated}
+           onRequestSearch={() => console.log('onRequestSearch')}
+           style={{
+             margin: '0 auto',
+             maxWidth: 500
+           }}
+          />
+          <br/>
+          <div className={classes.root}>
+          <GridList
+            cellHeight={300}
+            className={classes.gridList}>
+            {searchResults}
+          </GridList>
+          </div>
+          </Paper>
+        </Flexbox>
         <Footer/>
+
+
       </div>
     )
   }

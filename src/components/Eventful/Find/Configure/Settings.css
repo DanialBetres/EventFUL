@@ -12,5 +12,8 @@
   display: flex;
   justify-content: center; /*centers items on the line (the x-axis by default)*/
   align-items: center;
-  margin-top:-5%;
+  margin-top:-4%;
+}
+.space {
+  padding: 20px;
 }
