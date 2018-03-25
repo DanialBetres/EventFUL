@@ -5,18 +5,19 @@ import Settings from '../Eventful/Find/Configure/Settings';
 import View from '../Eventful/View/View';
 import Aux from '../../hoc/AuxA';
 import { Route, NavLink, Switch, Link, Redirect} from 'react-router-dom';
-
+import Login from '../Eventful/login/login';
 
 class Layout extends Component{
   render(){
     return(
       <Aux>
           <Switch>
-            <Route path="/" exact component={Find} />
+            <Route path="/" exact component={Login} />
             <Route path="/Settings" component={Settings} />
             <Route path="/View" component={View} />
             <Route path="/Favourite" component={View} />
-            <Redirect from="*" to="/" />
+            <Route path="/Find" component={Find} />
+            <Redirect from="*" to="/Find" />
           </Switch>
 
       </Aux>

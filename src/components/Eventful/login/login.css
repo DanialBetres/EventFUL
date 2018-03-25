@@ -1,0 +1,136 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto|Roboto+Condensed');
+.text{
+    color: rgba(255, 255, 255, 0.6);
+        margin-left:0px;
+    /* font-family: 'Roboto', sans-serif; */
+}
+.title1{
+    color:#ffffff;
+    font-size:30px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight:normal;
+ }
+ 
+.title2{
+    color:#ffffff;
+    font-size:42px;
+    font-family: 'Roboto Condensed', sans-serif;
+    font-weight:normal;
+}
+.space{
+
+    flex-grow: 1;
+    background-color:#2F6F94;
+}
+
+
+.material-icons{
+    color:Red;
+}
+.title{
+    display:flex;
+    align-items: baseline;
+    flex-grow: 3;
+    justify-content: baseline;
+    /* font-weight: 100; */
+
+}
+.titlemain{
+    display:flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    
+}
+
+.bottom{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width:100%;
+    flex-grow: 1;
+    /* position: relative; */
+}
+
+.bottom1{
+    font-size:13px;
+    color:rgba(255, 255, 255, 0.6);
+    font-family:'roboto';
+    font-weight:normal;
+    margin-bottom:13px;
+}
+.signinText {
+    font-size:24px;
+}
+
+.poly{
+    flex-grow:4;
+    display:flex;
+    align-items: center;
+
+}
+.flex {
+    background-color:#2F6F94;
+
+    flex-direction: column;
+    position: absolute;
+    width:100%;
+    height:100%;
+    align-items:center; 
+    
+    justify-content: space-evenly; 
+}
+
+.parent{
+    margin:0;
+    padding:0;
+    /* opacity:0.1; */
+    display:flex;
+    flex-direction: column;    
+    /* background-image: url('C:\\Users\\dania\\Documents\\3A\\MSCI 444\\eventFUL2\\EventFUL\\src\\components\\Eventful\\login\\background.jpg'); */
+}
+.alternativeLoginButtons {
+    display: flex;
+    justify-content: space-evenly;
+    width:100%;
+}
+.alternativeLogin {
+    display: flex;
+    justify-content: space-evenly;
+    
+}
+
+
+.material-icons{
+    color:white;
+}
+.polygon {
+    position: absolute;
+width: 50px;
+height: 50px;
+left: 163px;
+top: 88px;
+
+background: #2F6F94;
+border: 1px solid #F2F2F2;
+box-sizing: border-box;
+}
+
+
+
+.signin{
+    /* position: relative; */
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    flex-grow:2;
+    /* align-items: flex-start; */
+}   
+
+
+.newuser{
+
+    font-family: 'Roboto', sans-serif;
+
+}
+

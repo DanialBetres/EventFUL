@@ -20,9 +20,14 @@ const button = (props) =>{
             history.push(props.clicked);
             let data = props.data;
           }}
+      
+        // primary={true}
+        style={props.sty}
+        labelStyle={props.sty2}
         label={props.children}
-        primary={true}
-        style={props.sty}>  </RaisedButton>
+        backgroundColor={props.colour}
+        fullWidth={props.width}
+      >  </RaisedButton>
 
 
       )} />

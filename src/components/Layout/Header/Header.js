@@ -35,7 +35,7 @@ class Header extends Component {
     return (
       <div >
         <Paper zDepth={5} >
-          <BottomNavigation style={{height:45}} selectedIndex={this.state.selectedIndex}>
+          <BottomNavigation style={{height:25}} selectedIndex={this.state.selectedIndex}>
             <BottomNavigationItem
               label="Home"
               icon={recentsIcon}

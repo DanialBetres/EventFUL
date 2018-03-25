@@ -10,6 +10,7 @@ import {RadioButton, RadioButtonGroup} from 'material-ui/RadioButton';
 import Footer from '../../../Layout/Footer/Footer';
 import Header from '../../../Layout/Header/Header';
 import Flexbox from 'flexbox-react';
+import { red100 } from 'material-ui/styles/colors';
 // import ActionFavorite from 'material-ui/svg-icons/action/favorite';
 // import ActionFavoriteBorder from 'material-ui/svg-icons/action/favorite-border';
 
@@ -51,14 +52,27 @@ class Settings extends Component{
 
 
   render(){
+    const styles = {
+      buttons: {
+          width: 158,
+          height:50,
+          color:'#2F6F94',     
+      },
+      signinbutton1text:{
+        fontSize:18,
+        color:'white'
+
+    },
+    }
     return(
       <div>
 
         <Header />
         <Flexbox className={classes.flex} flexDirection="column" align="center" >
-
-          <h4> Willing to travel ... </h4>
+        <div className={classes.test}>
+          <h4 className={classes.text}> Willing to travel ... </h4>
           <RadioButtonGroup name="shipSpeed" defaultSelected={10}>
+
             <RadioButton
               onClick={this.distanceHandler}
               value={1}
@@ -71,6 +85,7 @@ class Settings extends Component{
               label="< 5 km"
               className={classes.radioButton}
             />
+            
             <RadioButton
               onClick={this.distanceHandler}
               value={5}
@@ -84,10 +99,10 @@ class Settings extends Component{
               className={classes.radioButton}
             />
           </RadioButtonGroup>
+        </div>
 
 
-
-          <h4> I want to do ... </h4>
+          <h4 className={classes.text}> I want to do ... </h4>
         <SelectField value={this.state.dropValue} onChange={this.handleChange} autoWidth={true}>
           <MenuItem  value={"Everything"} primaryText="Everything" />
           <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
@@ -101,26 +116,33 @@ class Settings extends Component{
           <MenuItem  value={"Exhibit"} primaryText="Exhibit" />
         </SelectField>
 
-        <h4> Start Date </h4>
+        <h4 className={classes.text}> Start Date </h4>
 
         <DatePicker
             hintText="Choose Start Date"
             onChange={(x, event) => this.StartDateValueHandler(event)}
             defaultDate={new Date()}
              />
-        <h4> End Date </h4>
+        <h4 className={classes.text}> End Date </h4>
         <DatePicker
             hintText="Choose End Date"
             onChange={(x, event) => this.EndDateValueHandler(event)}
             defaultDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
              />
-
+        <div className={classes.button}> 
         <Flexbox flexDirection="row">
           <Button
-            clicked={"/"}
+          colour={"#2F6F94"}
+          sty2={styles.signinbutton1text}
+          sty={styles.buttons}
+            clicked={"/Find"}
           > Cancel </Button>
           <div className={classes.space}> </div>
           <Button
+          colour={"#2F6F94"}
+          sty2={styles.signinbutton1text}
+
+          sty={styles.buttons}
             clicked={"/View/"+
               this.state.distance +"/"+
               this.state.dropValue + "/" +
@@ -130,7 +152,7 @@ class Settings extends Component{
 
 
         </Flexbox>
-
+  </div>
         <Footer/>
         </Flexbox>
       </div>
