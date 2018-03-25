@@ -43,17 +43,21 @@ class Header extends Component {
               onClick={() => history.push('/Find')}
             />
             )} />
+            <Route render={({ history}) => (
             <BottomNavigationItem
               label="Favourite"
               icon={favoritesIcon}
-              onClick={() => this.select(1)}
+              onClick={() => history.push('/Favourite')}
             />
+            )} />
             <BottomNavigationItem
               label="Help"
               icon={nearbyIcon}
               onClick={() => this.select(2)}
             />
+
           </BottomNavigation>
+
         </Paper>
       </div>
     );

@@ -459,9 +459,10 @@ class View extends Component {
       display: 'inline-block',
     };
     const gridList = {
-    width: "100%",
+    width: "80%",
     height: 500,
     overflowY: 'auto',
+    margin: "0 auto"
   };
 
     return (
@@ -479,6 +480,7 @@ class View extends Component {
            }}
           />
         </Flexbox>
+          <br/>
           <br/>
           <br/>
           <div className={classes.root}>
