@@ -458,32 +458,37 @@ class View extends Component {
       textAlign: 'center',
       display: 'inline-block',
     };
+    const gridList = {
+    width: "100%",
+    height: 500,
+    overflowY: 'auto',
+  };
 
     return (
       <div>
         <Header />
-        <Flexbox className={classes.flex} align="center">
-          <br/>
-          <Paper  style={style} zDepth={5} >
             <br/>
+            <br/>
+          <Flexbox className={classes.flex}>
           <SearchBar
            onChange={this.searchUpdated}
            onRequestSearch={() => console.log('onRequestSearch')}
            style={{
              margin: '0 auto',
-             maxWidth: 500
+             maxWidth: 500,
            }}
           />
+        </Flexbox>
+          <br/>
           <br/>
           <div className={classes.root}>
           <GridList
-            cellHeight={300}
-            className={classes.gridList}>
+            cols={1}
+            cellHeight={250}
+            style={gridList}>
             {searchResults}
           </GridList>
           </div>
-          </Paper>
-        </Flexbox>
         <Footer/>
 
 

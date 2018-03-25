@@ -1,16 +1,16 @@
 .root {
     display: "flex";
     flexWrap: "wrap";
-    justifyContent: "space-around";
-    height: 77%;
+    justify-Content: "space-around";
+    height: 50%;
     overflow: scroll;
-    width: 70%;
+    width: 75%;
     margin: 0 auto;
 },
 .gridList {
   width: 50%;
   height: 500;
-  overflowY: 'auto';
+  overflow-Y: "auto";
 }
 .information {
   margin-bottom: -10%;
@@ -41,6 +41,5 @@
     height: 100%;
     display: flex;
     justify-content: center; /*centers items on the line (the x-axis by default)*/
-    align-items: center;
     margin-top:-3%;
   }
