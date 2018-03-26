@@ -113,17 +113,11 @@ class View extends Component {
     this.setState({openModal: false});
   }
   distanceBool = (event) => {
-    // console.dir(event);
     let destination = [event];
     let location = this;
     let service = new window.google.maps.DistanceMatrixService();
-
     let currLocation = this.state.latitude + " " + this.state.longitude;
-    // console.log(currLocation);
-
-    // currLocation = "43.4710453, -80.53913759999999"
     return new Promise((resolve)=>{
-
         service.getDistanceMatrix({
         origins: [currLocation],
         destinations: destination,
@@ -134,7 +128,6 @@ class View extends Component {
        if (status == 'OK') {
          var origins = response.originAddresses;
          var destinations = response.destinationAddresses;
-
          for (var i = 0; i < origins.length; i++) {
            var results = response.rows[i].elements;
            for (var j = 0; j < results.length; j++) {
@@ -214,15 +207,7 @@ class View extends Component {
               filteredEvents.push(rawEvents[eventA]);
             }
           }
-          // for(let i=0; i <rawEvents.length;i++){
-          //
-          //   let eventA = rawEvents[i];
-          //   if(eventA != null){
-          //     console.log(eventA)
-          //
-          //     filteredEvents.push(eventA);
-          //   }
-          // }
+
           console.log(rawEvents);
           this.setState({events: filteredEvents});
 
@@ -388,36 +373,7 @@ class View extends Component {
     }
 
     let searchResults = filteredEvents.map((res,i) => {
-        // console.log(res.CATEGORY.toString())
 
-          // return (
-          //   <Paper key={res.ID  + i} style={style} zDepth={1} circle={true}>
-          //     <h4> {res.TITLE} </h4>
-          //     <div>
-          //       Start: <span><b>{res.START_DATE}</b></span>
-          //       <br/>
-          //       End: <span><b>{res.END_DATE}</b></span>
-          //       <br/>
-          //       {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
-          //         <p>
-          //         {res.DETAILS}
-          //         </p>
-          //     </div>
-          //
-          //     <IconButton
-          //       tooltip="Favourite This"
-          //       className={classes.button}
-          //       touch={true}
-          //       tooltipPosition="top-right"
-          //       onClick={()=>{this.favouriteEvent(res,i)}}>
-          //       <ActionGrade />
-          //     </IconButton>
-          //   </Paper>
-          //
-
-          //
-          // )
-          // <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
           return (
             <Paper  style={style} zDepth={5} >
               <GridTile
@@ -460,7 +416,7 @@ class View extends Component {
                   label="Info"
                   className={classes.button}
                   icon={<FontIcon className="help" />} */}
-                
+
                 <img alt='img' src={res.VIDEO} />
 
               </GridTile>
