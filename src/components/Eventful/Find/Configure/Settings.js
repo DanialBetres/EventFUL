@@ -56,7 +56,7 @@ class Settings extends Component{
       buttons: {
           width: 158,
           height:50,
-          color:'#2F6F94',     
+          color:'#2F6F94',
       },
       signinbutton1text:{
         fontSize:18,
@@ -85,7 +85,7 @@ class Settings extends Component{
               label="< 5 km"
               className={classes.radioButton}
             />
-            
+
             <RadioButton
               onClick={this.distanceHandler}
               value={5}
@@ -95,7 +95,7 @@ class Settings extends Component{
             <RadioButton
               onClick={this.distanceHandler}
               value={10}
-              label="Everywhere"
+              label="Anywhere"
               className={classes.radioButton}
             />
           </RadioButtonGroup>
@@ -104,7 +104,7 @@ class Settings extends Component{
 
           <h4 className={classes.text}> I want to do ... </h4>
         <SelectField value={this.state.dropValue} onChange={this.handleChange} autoWidth={true}>
-          <MenuItem  value={"Everything"} primaryText="Everything" />
+          <MenuItem  value={"Everything"} primaryText="Anything" />
           <MenuItem  value={"Arts and Cultural Events"} primaryText="Arts and Cultural Events" />
           <MenuItem  value={"Community Events"} primaryText="Community Events" />
           <MenuItem  value={"Committee of the whole meetings"} primaryText="Committee of the whole meetings" />
@@ -129,7 +129,7 @@ class Settings extends Component{
             onChange={(x, event) => this.EndDateValueHandler(event)}
             defaultDate={new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)}
              />
-        <div className={classes.button}> 
+        <div className={classes.button}>
         <Flexbox flexDirection="row">
           <Button
           colour={"#6ca0dc"}
