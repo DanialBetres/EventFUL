@@ -454,13 +454,13 @@ class View extends Component {
                   </div>
                 }>
 
-                <RaisedButton
+                {/* <RaisedButton
                   onClick={this.openModal}
                   target="_blank"
                   label="Info"
                   className={classes.button}
-                  icon={<FontIcon className="help" />}
-                />
+                  icon={<FontIcon className="help" />} */}
+                
                 <img alt='img' src={res.VIDEO} />
 
               </GridTile>

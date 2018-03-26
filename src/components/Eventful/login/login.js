@@ -79,10 +79,10 @@ class Login extends Component {
         
         <div className={classes.parent} styles={{ backgroundImage: "url('../../../assets/kitchener.png')"}}>
                 <Flexbox className={classes.flex}>
-                <div className={classes.poly}>
+                {/* <div className={classes.poly}>
                 <Polygon fillColor={"#FFF275"} size={75} ratios={[1,1,1,1,1,1]} n={6} />
-                <Polygon size={75} ratios={[1,1,1,1,1,1]} n={6} />
-    </div>
+                <Polygon fillColor={"#FFFFFF"} size={75} ratios={[1,1,1,1,1,1]} n={6} />
+    </div> */}
             <div className={classes.title}>
         
 
