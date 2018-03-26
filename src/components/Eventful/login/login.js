@@ -42,41 +42,45 @@ class Login extends Component {
             },
             signInButton: {
                 width:225,
-                height:42,
+                height:45,
                 fontSize:24,
-                color:'#2F6F94',
+                color:'#FFFFFF',
             //    color:rgba(255, 255, 255, 0.6)
             },
             signInButton2: {
-                width:150,
+                width:180,
                 height:42,
                 fontSize:18,
-                color:'#2F6F94',
+                color:'#FFFFFF',
             //    color:rgba(255, 255, 255, 0.6)
             },
             hintstyle: {
-                color:'rgba(255, 255, 255, 0.6)',
-                
-                fontSize:24
+                color:'#FFFFFF',
+                justifyContent:'baseline',
+                fontSize:28
                 
             },
             signinbutton1text:{
                 fontSize:24,
+                color:"black",
 
             },
             signinbutton2text:{
-                fontSize:18
-
+                fontSize:18,
+                color:"black"
+            },
+            background: {
+                backgroundImage: "url('../../../assets/kitchener.png')"
             }
      
         }
 
     return (
         
-        <div className={classes.parent}>
+        <div className={classes.parent} styles={{ backgroundImage: "url('../../../assets/kitchener.png')"}}>
                 <Flexbox className={classes.flex}>
                 <div className={classes.poly}>
-                <Polygon size={75} ratios={[1,1,1,1,1,1]} n={6} />
+                <Polygon fillColor={"#FFF275"} size={75} ratios={[1,1,1,1,1,1]} n={6} />
                 <Polygon size={75} ratios={[1,1,1,1,1,1]} n={6} />
     </div>
             <div className={classes.title}>
@@ -87,10 +91,10 @@ class Login extends Component {
                 
             </div>
             <div className={classes.signin}>
-                <TextFieldExample hintstyle = {styles.hintstyle} className={classes.login + " " + classes.text + " " + classes.signinText} title="Username" icon="person"/>
-                <TextFieldExample hintstyle = {styles.hintstyle} className={classes.login  + " " + classes.text + " " + classes.signinText} title="Password" icon="lock"/>
+                <TextFieldExample hintstyle = {styles.hintstyle} className={ classes.text + " " + classes.signinText} title="Username" icon="person"/>
+                <TextFieldExample hintstyle = {styles.hintstyle} className={ classes.text + " " + classes.signinText} title="Password" icon="lock"/>
 
-                    <Button sty={styles.signInButton} colour={"off-white"} clicked="/Find" fullwidth={true} sty2={styles.signinbutton1text} width={true} className={classes.login + " " + classes.signinText} primary={false}>SIGN IN</Button>
+                    <Button sty={styles.signInButton} colour={"#BEDAF7"} clicked="/Find" fullwidth={true} sty2={styles.signinbutton1text} width={true} className={classes.login + " " + classes.signinText} primary={false}>SIGN IN</Button>
 
                 <div className={classes.alternativeLogin}>
                     <h4 className={classes.newuser  + " " + classes.text}>Create Account</h4>
@@ -102,8 +106,8 @@ class Login extends Component {
                 <h6 className={classes.bottom1}> LOGIN WITH</h6>
             <div className={classes.alternativeLoginButtons}>
             {/* <Flexbox justifyContent="space-evenly"> */}
-                <Button sty={styles.signInButton2} colour={"off-white"} sty2={styles.signinbutton2text} primary={false}>FACEBOOK</Button>
-                <Button sty={styles.signInButton2} colour={"off-white"} sty2={styles.signinbutton2text} primary={false}>GOOGLE</Button>
+                <Button sty={styles.signInButton2} colour={"#BEDAF7"} sty2={styles.signinbutton2text} primary={false}>FACEBOOK</Button>
+                <Button sty={styles.signInButton2} colour={"#BEDAF7"} sty2={styles.signinbutton2text} primary={false}>GOOGLE</Button>
                 {/* </Flexbox> */}
             </div>
             </div>

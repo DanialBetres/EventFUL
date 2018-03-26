@@ -1,4 +1,4 @@
-test ={
+test {
     background-color: #4CAF50; /* Green */
     border: none;
     color: white;
@@ -17,6 +17,7 @@ test ={
     margin: 0 auto;
 }
 .flex{
+  background-color:	"off-white";
   overflow: hidden;
   position: absolute;
   width: 100%;

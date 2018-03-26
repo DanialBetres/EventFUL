@@ -132,14 +132,14 @@ class Settings extends Component{
         <div className={classes.button}> 
         <Flexbox flexDirection="row">
           <Button
-          colour={"#2F6F94"}
+          colour={"#6ca0dc"}
           sty2={styles.signinbutton1text}
           sty={styles.buttons}
             clicked={"/Find"}
           > Cancel </Button>
           <div className={classes.space}> </div>
           <Button
-          colour={"#2F6F94"}
+          colour={"#6ca0dc"}
           sty2={styles.signinbutton1text}
 
           sty={styles.buttons}

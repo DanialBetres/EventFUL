@@ -11,19 +11,25 @@ import Flexbox from 'flexbox-react';
 
 const find = (props) =>{
   const style={
-    width: 297,
-    height: 133,
+    dimension: {
+      width: 320,
+      height: 160,
+    },
+    text:{
+      fontSize:25,
+      color:"white"
+  },
   }
 
   return (
     <div>
       <Header> </Header>
         <Flexbox className={classes.flex} flexDirection="column" align="center" >
-          <Button sty={style} clicked="/Settings"> Find an Event </Button>
+          <Button sty={style.dimension} sty2={style.text} colour={"#6ca0dc"} clicked="/Settings"> Find an Event </Button>
           <br/>
-          <Button sty={style} style clicked="/View/all"> View All </Button>
+          <Button sty={style.dimension} sty2={style.text}  colour={"#6ca0dc"}  clicked="/View/all"> View All </Button>
           <br/>
-          <Button sty={style} style clicked="/Favourite"> Favourite </Button>
+          <Button sty={style.dimension} sty2={style.text}  colour={"#6ca0dc"} clicked="/Favourite"> Favourite </Button>
         </Flexbox>
       <Footer > </Footer>
     </div>
