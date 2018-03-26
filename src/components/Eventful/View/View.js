@@ -15,7 +15,7 @@ import Footer from '../../Layout/Footer/Footer';
 import Header from '../../Layout/Header/Header';
 import Flexbox from 'flexbox-react';
 import Paper from 'material-ui/Paper';
-
+import Snackbar from 'material-ui/Snackbar';
 
 const KEYS_TO_FILTERS = ['TITLE', 'CATEGORY']
 
@@ -48,6 +48,7 @@ class View extends Component {
     dist: 0,
     distBool: false,
     favourite: false,
+    openSnackBar: false,
 
   };
   constructor (props){
@@ -175,7 +176,7 @@ class View extends Component {
 };
   favouriteEvent = (event,i) => {
     database.ref('/569/' + i ).set(event);
-
+    this.handleClick();
     console.log(event);
     console.log(i);
   }
@@ -365,6 +366,17 @@ class View extends Component {
   searchUpdated (term) {
     this.setState({searchTerm: term})
   }
+  handleClick = () => {
+    this.setState({
+      open: true,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
 
   render() {
 
@@ -414,36 +426,43 @@ class View extends Component {
           // <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
           return (
             <Paper  style={style} zDepth={5} >
-            <br/>
-            <br/>
-            <br/>
               <GridTile
                 key={res.ID  + i}
                 title={res.TITLE}
                 subtitle={
                   <div>
-                    Start: <span><b>{res.START_DATE}</b></span>
-                    <br/>
-                    End: <span><b>{res.END_DATE}</b></span>
-                    <br/>
-                    {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
-                    <Modal open={openModal} onClose={this.closeModal} little>
-                      <p>
-                      {res.DETAILS}
-                      </p>
-                    </Modal>
+                    <Flexbox flexDirection="row">
+                      <Flexbox flexDirection="column">
+                         <span>Start:<b>{res.START_DATE}</b></span>
+                         <span>End:<b>{res.END_DATE}</b></span>
+                        {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
+                        <Modal open={openModal} onClose={this.closeModal} little>
+                          <p>
+                          {res.DETAILS}
+                          </p>
+                        </Modal>
+                      </Flexbox>
+
+                      <IconButton
+                        iconStyle={{color:"white", marginLeft:150, marginBottom:50}}
+                        tooltip="Favourite This"
+                        className={classes.button}
+                        touch={true}
+                        tooltipPosition="top-right"
+                        onClick={()=>{this.favouriteEvent(res,i)}}>
+                        <ActionGrade
+                           />
+                      </IconButton>
+                    </Flexbox>
+
+
+
                   </div>
                 }>
 
-                <IconButton
-                  tooltip="Favourite This"
-                  className={classes.button}
-                  touch={true}
-                  tooltipPosition="top-right"
-                  onClick={()=>{this.favouriteEvent(res,i)}}>
-                  <ActionGrade />
-                </IconButton>
+
                 <img alt='img' src={res.VIDEO} />
+
               </GridTile>
               <br/>
               <br/>
@@ -460,8 +479,8 @@ class View extends Component {
       display: 'inline-block',
     };
     const gridList = {
-    width: "80%",
-    height: 500,
+    width: "95%",
+    height: 550,
     overflowY: 'auto',
     margin: "0 auto"
   };
@@ -492,6 +511,12 @@ class View extends Component {
             {searchResults}
           </GridList>
           </div>
+          <Snackbar
+          open={this.state.open}
+          message="Event added to Favorite!"
+          autoHideDuration={3000}
+          onRequestClose={this.handleRequestClose}
+        />
         <Footer/>
 
 

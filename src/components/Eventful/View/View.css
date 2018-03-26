@@ -2,11 +2,12 @@
     display: "flex";
     flexWrap: "wrap";
     justify-Content: "space-around";
-    height: 50%;
+    /* height: 50%; */
     overflow: scroll;
     width: 100%;
     margin: 0 auto;
 },
+
 .gridList {
   width: 50%;
   height: 500;
