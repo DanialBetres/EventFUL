@@ -402,7 +402,13 @@ class View extends Component {
           //     </IconButton>
           //   </Paper>
           //
-          //
+          //<RaisedButton
+          //   onClick={this.openModal}
+          //   target="_blank"
+          //   label="Info"
+          //   className={classes.button}
+          //   icon={<FontIcon className="help" />}
+          // />
           //
           // )
           // <img alt='img' src={IMAGE_SOURCE[res.CATEGORY]} />
@@ -428,13 +434,7 @@ class View extends Component {
                     </Modal>
                   </div>
                 }>
-                <RaisedButton
-                  onClick={this.openModal}
-                  target="_blank"
-                  label="Info"
-                  className={classes.button}
-                  icon={<FontIcon className="help" />}
-                />
+
                 <IconButton
                   tooltip="Favourite This"
                   className={classes.button}
@@ -443,6 +443,7 @@ class View extends Component {
                   onClick={()=>{this.favouriteEvent(res,i)}}>
                   <ActionGrade />
                 </IconButton>
+                <img alt='img' src={res.VIDEO} />
               </GridTile>
               <br/>
               <br/>

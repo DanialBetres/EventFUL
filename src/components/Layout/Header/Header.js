@@ -35,7 +35,7 @@ class Header extends Component {
     return (
       <div >
         <Paper zDepth={5} >
-          <BottomNavigation style={{height:25}} selectedIndex={this.state.selectedIndex}>
+          <BottomNavigation style={{height:40}} selectedIndex={this.state.selectedIndex}>
           <Route render={({ history}) => (
             <BottomNavigationItem
               label="Home"
@@ -51,13 +51,11 @@ class Header extends Component {
             />
             )} />
             <BottomNavigationItem
-              label="Help"
+              label="University of Waterloo"
               icon={nearbyIcon}
               onClick={() => this.select(2)}
             />
-
           </BottomNavigation>
-
         </Paper>
       </div>
     );
