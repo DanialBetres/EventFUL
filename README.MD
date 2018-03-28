@@ -10,6 +10,4 @@ Something cool
 2. Navigate to the folder
 3. Run `npm install`
 4. Run `npm start`
-  - If it doesn't work... you're screwed rip
 
-We appreciate all donations :D
