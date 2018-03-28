@@ -49,6 +49,8 @@ class View extends Component {
     distBool: false,
     favourite: false,
     openSnackBar: false,
+    emptyResults:false,
+
 
   };
   constructor (props){
@@ -253,6 +255,10 @@ class View extends Component {
                   }
                 }
                 }
+                if(filteredEvents.length ==0){
+                  console.log("THE EVENT LIST IS EMPTYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+                  this.setState({emptyResults:true});
+                }
 
 
               } else {
@@ -322,6 +328,11 @@ class View extends Component {
                   //
                   // }
                 }
+                } 
+                if(filteredEvents.length ==0){
+                  console.log("THE EVENT LIST IS EMPTYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+                  this.setState({emptyResults:true});
+  
                 }
               }
 
@@ -346,6 +357,11 @@ class View extends Component {
                   }
                 }
 
+
+              }
+              if(filteredEvents.length ==0){
+                console.log("THE EVENT LIST IS EMPTYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY")
+                this.setState({emptyResults:true});
 
               }
             }
@@ -386,6 +402,13 @@ class View extends Component {
 
     const filteredEvents = this.state.events.filter(createFilter(this.state.searchTerm, KEYS_TO_FILTERS))
     const {openModal} = this.state;
+    let empty = () =>{
+      if (this.state.emptyResults==true){
+        console.log("bobbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb")
+        this.setState({emptyResults:false})
+        alert("No Results Found")
+      }
+    }
     const mapOptions = {
       zoom: 10,
       center: { lat: this.state.latitude, lng: this.state.longitude }
@@ -485,6 +508,8 @@ class View extends Component {
             style={gridList}>
             {searchResults}
           </GridList>
+          { empty() }
+
           </div>
           <Snackbar
           open={this.state.open}
