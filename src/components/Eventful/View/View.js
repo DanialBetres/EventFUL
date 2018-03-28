@@ -274,34 +274,53 @@ class View extends Component {
                   eventA.START_DATE = startDateArr[0] + " " + startDate;
                   eventA.END_DATE = endDateArr[0] + " " + endDate;
 
-                  if(eventA.LOCATION){
-                    new Promise((resolve)=>{
-                      let x = this.distanceBool(eventA.LOCATION)
+                  let dist = eventA.PACKETS;
+                  // console.log(dist)
+                  // if(this.state.distance ==5 && dist > this.state.distance){
+                  //   this.setState({distBool: true})
+                  // } else if (this.state.distance ==4.9 && dist<5 && dist>1){
+                  //   this.setState({distBool: true})
+                  // } else if (this.state.distance ==1 && dist<1){
+                  //   this.setState({distBool: true})
+                  // };
 
-                      resolve(x)
-                    }).then((res)=>{
-                      let dist = parseFloat(res);
-                      // console.log(dist)
-                      if(this.state.distance ==5 && dist > this.state.distance){
-                        this.setState({distBool: true})
-                      } else if (this.state.distance ==4.9 && dist<5 && dist>1){
-                        this.setState({distBool: true})
-                      } else if (this.state.distance ==1 && dist<1){
-                        this.setState({distBool: true})
-                      }
-                      eventA.DISTANCE = res;
-                      // console.log(this.state.distance);
-                      // console.log(this.state.distBool);
-                      if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && this.state.distBool ){
-                        filteredEvents.push(eventA);
-                      } else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate) &&this.state.distBool){
-                        filteredEvents.push(eventA);
-                      }
-                    }).then(()=>{
-                      this.setState({distBool: false});
-                    })
-
+                  if(this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && (this.state.distance ==5 && dist > this.state.distance) ){
+                    filteredEvents.push(eventA);
+                  } else if(this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && (this.state.distance ==4.9 && dist<5 && dist>1) ){
+                    filteredEvents.push(eventA);
+                  } else if(this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && (this.state.distance ==1 && dist<1) ){
+                    filteredEvents.push(eventA);
+                  } else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate) &&this.state.distBool){
+                    filteredEvents.push(eventA);
                   }
+                  // if(eventA.LOCATION){
+                  //   new Promise((resolve)=>{
+                  //     let x = this.distanceBool(eventA.LOCATION)
+                  //
+                  //     resolve(x)
+                  //   }).then((res)=>{
+                  //     let dist = parseFloat(res);
+                  //     // console.log(dist)
+                  //     if(this.state.distance ==5 && dist > this.state.distance){
+                  //       this.setState({distBool: true})
+                  //     } else if (this.state.distance ==4.9 && dist<5 && dist>1){
+                  //       this.setState({distBool: true})
+                  //     } else if (this.state.distance ==1 && dist<1){
+                  //       this.setState({distBool: true})
+                  //     }
+                  //     eventA.DISTANCE = res;
+                  //     // console.log(this.state.distance);
+                  //     // console.log(this.state.distBool);
+                  //     if (this.state.activity === "Everything" && (sdate >= this.state.startDate && edate <=this.state.endDate) && this.state.distBool ){
+                  //       filteredEvents.push(eventA);
+                  //     } else if(eventA.CATEGORY === this.state.activity && (sdate >= this.state.startDate && edate <=this.state.endDate) &&this.state.distBool){
+                  //       filteredEvents.push(eventA);
+                  //     }
+                  //   }).then(()=>{
+                  //     this.setState({distBool: false});
+                  //   })
+                  //
+                  // }
                 }
                 }
               }
@@ -383,9 +402,9 @@ class View extends Component {
                   <div>
                     <Flexbox flexDirection="row">
                       <Flexbox flexDirection="column">
-                         <span>Start:<b>{res.START_DATE}</b></span>
-                         <span>End:<b>{res.END_DATE}</b></span>
-                        {res.DISTANCE ? <span> Distance {res.DISTANCE} </span> : null}
+                         <span>Start: <b>{res.START_DATE}</b></span>
+                         <span>End:   <b>{res.END_DATE}</b></span>
+                        {res.PACKETS ? <span> Distance: {res.PACKETS} Km</span> : null}
                         <Modal open={openModal} onClose={this.closeModal} little>
                           <p>
                           {res.DETAILS}
